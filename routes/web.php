@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', ['as' => 'login.web', 'uses' => 'SignPage\LoginController@index']);
 Route::post('/login', ['as' => 'login.post', 'uses' => 'SignPage\LoginController@checkUserLogin']);
 
+//GOOGLE LOGIN
+Route::get('google', ['as' => 'auth/google', 'uses' => 'SocialiteAuthController@googleRedirect']);
+Route::get('/auth/google-callback', ['uses' => 'SocialiteAuthController@loginWithGoogle']);
+
 Route::middleware(['auth.login.information'])->group(function () {
     Route::post('/logout', ['as' => 'logout.post', 'uses' => 'SignPage\LoginController@logout']);
 

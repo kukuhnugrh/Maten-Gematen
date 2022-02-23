@@ -33,13 +33,12 @@
                     <img src="{{ asset('assets/img/icon.ico') }}" class="rounded-circle">
                     <p class="gradient-text text-center w-100">Mande Gematen</p>
                 </div>
-            
             </div>
             @error('error')
             <div class="text-danger text-center fs-6">{{ $message }}</div>
             @enderror
-            <div id="login-form" class="h-75 d-flex justify-content-center align-items-center">
-                <form class="w-100" action="{{route('login.post')}}" method="post">
+            <div id="login-form" class="h-75 d-flex flex-column justify-content-center align-items-center">
+                <form class="w-100 mb-5" action="{{route('login.post')}}" method="post">
                     @csrf
                     <div class="mb-3 w-100">
                         <label for="inputEmail" class="form-label fw-bold fs-6">Email</label>
@@ -60,6 +59,15 @@
                     </div>
                     <button type="submit" class="btn btn-primary w-100" style="background-color: #DC413E; border-color: #DC413E;">Login</button>
                 </form>
+                <div class="mb-3" style="color: #7f8c8d;">
+                    atau
+                </div>
+                <a href="{{ route('auth/google') }}">
+                    <div id="login-with-google" class="d-flex justify-content-center align-items-center ">
+                        <img src="{{ asset('assets/img/google_icon.png') }}" class="rounded-circle">
+                        <p class="text-center">Masuk Dengan Google</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

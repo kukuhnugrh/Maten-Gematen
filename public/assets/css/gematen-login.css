@@ -17,11 +17,11 @@
     margin: auto;
     border-radius: 1vmax;
     border: 1px solid #c23616;
-    min-width: 30%;
+    max-width: 35%;
     height: 80%;
 }
 
-#login-header{
+#login-header, #login-form{
     border-bottom: 1px solid #aaa69d;
 }
 
@@ -31,7 +31,7 @@
 }
 
 #login-header p {
-    font-size: 3vw;
+    font-size: 2.5vw;
     margin: 0;
 }
 
@@ -49,6 +49,19 @@
     border-right-style: hidden;
     border-bottom-style: groove;
     border-radius: 0;
+}
+
+#login-with-google img{
+    max-width: 10%;
+    font-size: 2vw;
+}
+
+#login-with-google p{
+    font-size: 1vw;
+    margin: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #27ae60;
 }
 
 label,
@@ -72,6 +85,7 @@ input {
 @media (max-width: 768px) {
 
     #form-wrapper {
+        max-width: 100%;
         width: 100vw;
         height: 80%;
     }

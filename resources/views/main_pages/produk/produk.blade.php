@@ -72,7 +72,7 @@
 @section('content-JS')
 <script>
     let data = <?php echo json_encode($response_produk) ?>;
-
+    
     function showProduk(data) {
         var produk_html = "<div class='col-lg-3 col-sm-4 col-xs-2 mb-3'>" +
             "<a href='" + data.link_detail + "' style='text-decoration: none; color: black;'>" +
@@ -95,74 +95,96 @@
 
     function searchAction(value) {
         $("#data-produk").remove();
-        $("#body-produk").append('<div class="row" id="data-produk"></div>');
-        data.forEach(produk => {
-            let result = produk.nama_produk.match(new RegExp(value, "gi"));
 
-            if (result != null) {
-                $("#data-produk").append(showProduk(produk));
-            }
-
-        });
+        if (data.length != 0) {
+            $("#body-produk").append('<div class="row" id="data-produk"></div>');
+            data.forEach(produk => {
+                let result = produk.nama_produk.match(new RegExp(value, "gi"));
+                if (result != null) {
+                    $("#data-produk").append(showProduk(produk));
+                }
+            });
+        } else {
+            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Produk Tidak Ditemukan</div>');
+        }
     }
 
     $(document).ready(function() {
-
-        $("#body-produk").append('<div class="row" id="data-produk"></div>');
-        data.forEach(produk => {
-            $("#data-produk").append(showProduk(produk));
-        });
-
-        $("#semua-produk").click(function(e) {
-            $("#data-produk").remove();
+        $("#data-produk").remove();
+        if(data.length != 0) {
             $("#body-produk").append('<div class="row" id="data-produk"></div>');
             data.forEach(produk => {
                 $("#data-produk").append(showProduk(produk));
             });
+        } else {
+            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+        }
 
+        $("#semua-produk").click(function(e) {
+            $("#data-produk").remove();
+            if(data.length != 0) {
+                $("#body-produk").append('<div class="row" id="data-produk"></div>');
+                data.forEach(produk => {
+                    $("#data-produk").append(showProduk(produk));
+                });
+            } else {
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+            }
             $("#search-input").val("");
-
             $("#semua-produk").removeClass("active active-color").addClass("active active-color");
             $("#produk-tersedia").removeClass("active active-color");
             $("#produk-kosong").removeClass("active active-color");
 
         });
+
         $("#produk-tersedia").click(function(e) {
             $("#data-produk").remove();
-            $("#body-produk").append('<div class="row" id="data-produk"></div>');
-            data.forEach(produk => {
-                if (produk.penjualan_produk != 0) {
-                    $("#data-produk").append(showProduk(produk));
-                }
-
-            });
-
+            if(data.length != 0) {
+                $("#body-produk").append('<div class="row" id="data-produk"></div>');
+                var count = 0;
+                data.forEach(produk => {
+                    if (produk.penjualan_produk != 0) {
+                        count++;
+                        $("#data-produk").append(showProduk(produk));
+                    }
+                    if (count == 0){
+                        $("#data-produk").remove();
+                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Tersedia</div>');
+                    }
+                });
+            } else {
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+            }
             $("#search-input").val("");
-
             $("#semua-produk").removeClass("active active-color");
             $("#produk-tersedia").removeClass("active active-color").addClass("active active-color");
             $("#produk-kosong").removeClass("active active-color");
 
         });
+
         $("#produk-kosong").click(function(e) {
             $("#data-produk").remove();
-            $("#body-produk").append('<div class="row" id="data-produk"></div>');
-            data.forEach(produk => {
-                if (produk.penjualan_produk <= 0) {
-                    $("#data-produk").append(showProduk(produk));
-                }
-
-            });
-
+            if(data.length != 0) {
+                $("#body-produk").append('<div class="row" id="data-produk"></div>');
+                var count = 0;
+                data.forEach(produk => {
+                    if (produk.penjualan_produk <= 0) {
+                        count++;
+                        $("#data-produk").append(showProduk(produk));
+                    }
+                    if (count == 0){
+                        $("#data-produk").remove();
+                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Kosong</div>');
+                    }
+                });
+            } else {
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+            }
             $("#search-input").val("");
-
             $("#semua-produk").removeClass("active active-color");
             $("#produk-tersedia").removeClass("active active-color");
             $("#produk-kosong").removeClass("active active-color").addClass("active active-color");
-
         });
-
-
     });
 </script>
 @endsection

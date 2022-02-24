@@ -31,7 +31,7 @@
 }
 
 #login-header p {
-    font-size: 2.5vw;
+    font-size: calc((100vw/100)*2.5);
     margin: 0;
 }
 
@@ -52,12 +52,11 @@
 }
 
 #login-with-google img{
-    max-width: 10%;
-    font-size: 2vw;
+    max-width: 15%;
 }
 
 #login-with-google p{
-    font-size: 1vw;
+    font-size: calc((100vw/100)*1.5);
     margin: 0;
     margin-left: 10px;
     margin-right: 10px;

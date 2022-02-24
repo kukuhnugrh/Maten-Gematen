@@ -63,7 +63,7 @@
                     atau
                 </div>
                 <a href="{{ route('auth/google') }}">
-                    <div id="login-with-google" class="d-flex justify-content-center align-items-center ">
+                    <div id="login-with-google" class="d-flex justify-content-center align-items-center">
                         <img src="{{ asset('assets/img/google_icon.png') }}" class="rounded-circle">
                         <p class="text-center">Masuk Dengan Google</p>
                     </div>

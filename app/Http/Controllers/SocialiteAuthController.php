@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
@@ -22,7 +21,6 @@ class SocialiteAuthController extends Controller
             $googleUser = Socialite::driver('google')->user();
 
             $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
-                "client_id" => $googleUser['id'],
                 "email" => $googleUser['email'],
                 "type" => "google"
             ]);

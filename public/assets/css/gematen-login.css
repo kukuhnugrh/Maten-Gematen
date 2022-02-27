@@ -51,12 +51,16 @@
     border-radius: 0;
 }
 
+#login-with-google{
+    text-decoration: none;
+}
+
 #login-with-google img{
-    max-width: 15%;
+    max-width: 10%;
 }
 
 #login-with-google p{
-    font-size: calc((100vw/100)*1.5);
+    font-size: calc((100vw/100)*1);
     margin: 0;
     margin-left: 10px;
     margin-right: 10px;
@@ -107,5 +111,17 @@ input {
     label,
     button {
         font-size: 3.5vw !important;
+    }
+
+    #login-with-google img{
+        max-width: 10%;
+    }
+    
+    #login-with-google p{
+        font-size: calc((100vw/100)*3);
+        margin: 0;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: #27ae60;
     }
 }

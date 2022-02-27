@@ -15,11 +15,6 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-
-    .card-color-dashboard {
-        background-color: #8B0000 !important;
-        color: white;
-    }
 </style>
 @endsection
 

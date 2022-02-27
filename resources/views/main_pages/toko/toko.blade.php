@@ -2,12 +2,6 @@
 @section('info-halaman', 'Detail Lapak')
 @section('content-CSS')
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-<style>
-    .card-color-dashboard {
-        background-color: #A13333 !important;
-        color: white;
-    }
-</style>
 @endsection
 @section('content')
 <div id="main-content" class="d-flex flex-column">

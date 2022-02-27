@@ -77,6 +77,22 @@ html {
     max-height: 30%;
 }
 
+.card-header {
+    background-color: #A13333 !important;
+}
+
+.card-color-dashboard {
+    background-color: #A13333 !important;
+    color: white;
+}
+
+.center-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
 
     i.mdi-menu {

@@ -1,15 +1,6 @@
 @extends('admin/layout_admin')
 @section('info-halaman', 'List Lapak')
 
-@section('content-CSS')
-<style>
-    .active-color {
-        color: black !important;
-        font-weight: bold;
-    }
-</style>
-@endsection
-
 @section('content')
 <div id="main-content" class="d-flex flex-column">
     <div class="container-fluid p-0">
@@ -29,40 +20,72 @@
             </div>
             <div class="card-body" id="body-lapak">
                 <ul class="list-group" id="semua-status">
-                    @foreach($arrLapak as $lapak)
-                    <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{$lapak['nama_lapak']}}
-                            <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
-                        </li>
-                    </a>
-                    @endforeach
+                    @if (count($arrLapak) == 0 )
+                        <div class="container-fluid center-item bg-white ellipsis">
+                            <span class="fw-bold">Belum Ada Lapak Terdaftar</span>
+                        </div>
+                    @else
+                        @foreach($arrLapak as $lapak)
+                        <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{$lapak['nama_lapak']}}
+                                <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
+                            </li>
+                        </a>
+                        @endforeach
+                    @endif
                 </ul>
 
                 <ul class="list-group" id="status-active">
-                    @foreach($arrLapak as $lapak)
-                    @if($lapak['status_lapak'] == 'ACTIVE')
-                    <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{$lapak['nama_lapak']}}
-                            <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
-                        </li>
-                    </a>
+                    @if (count($arrLapak) == 0 )
+                        <div class="container-fluid center-item bg-white ellipsis">
+                            <span class="fw-bold">Belum Ada Lapak Terdaftar</span>
+                        </div>
+                    @else
+                        @php $count = 0 @endphp
+                        @foreach($arrLapak as $lapak)
+                            @if($lapak['status_lapak'] == 'ACTIVE')
+                                @php ($count++) @endphp
+                                <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{$lapak['nama_lapak']}}
+                                        <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
+                                    </li>
+                                </a>
+                            @endif
+                            @if ($count == 0)
+                                <div class="container-fluid center-item bg-white ellipsis">
+                                    <span class="fw-bold">Tidak Terdapat Lapak Aktif Saat Ini</span>
+                                </div>
+                            @endif
+                        @endforeach
                     @endif
-                    @endforeach
                 </ul>
 
                 <ul class="list-group" id="status-inactive">
-                    @foreach($arrLapak as $lapak)
-                    @if($lapak['status_lapak'] == 'INACTIVE')
-                    <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{$lapak['nama_lapak']}}
-                            <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
-                        </li>
-                    </a>
+                    @if (count($arrLapak) == 0 )
+                        <div class="container-fluid center-item bg-white ellipsis">
+                            <span class="fw-bold">Belum Ada Lapak Terdaftar</span>
+                        </div>
+                    @else
+                        @php $count = 0 @endphp
+                        @foreach($arrLapak as $lapak)
+                            @if($lapak['status_lapak'] == 'INACTIVE')
+                                @php ($count++) @endphp
+                                <a href="{{route('daftar-lapak.detaillapak',Crypt::encryptString($lapak['_id']))}}" style="text-decoration: none; color: black; font-weight: bold;">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{$lapak['nama_lapak']}}
+                                        <span class="badge bg-primary rounded-pill">{{$lapak['status_lapak']}}</span>
+                                    </li>
+                                </a>
+                            @endif
+                        @endforeach
+                        @if ($count == 0)
+                            <div class="container-fluid center-item bg-white ellipsis">
+                                <span class="fw-bold">Tidak Terdapat Lapak NonAktif Saat Ini</span>
+                            </div>
+                        @endif
                     @endif
-                    @endforeach
                 </ul>
             </div>
         </div>

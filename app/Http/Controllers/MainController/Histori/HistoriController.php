@@ -16,7 +16,7 @@ class HistoriController extends Controller
     public function index()
     {
         $dataTransaksi = Http::withToken(session('_jwtToken'))->get('https://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/lapak/' . session('_lapakId') . '/get')->collect();
-        //dd($dataTransaksi);
+        
         return view('main_pages/histori_penjualan/daftar_histori', ["dataTransaksi" => $dataTransaksi]);
     }
 

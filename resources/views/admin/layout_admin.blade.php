@@ -100,6 +100,8 @@
     </div>
 
     @yield('tambahanModal')
+    @yield('ModalTutorialMenambahKategori')
+    
     <script>
         $(document).ready(function() {
             $("i.mdi-menu").click(function(e) {

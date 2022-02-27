@@ -77,6 +77,14 @@ html {
     max-height: 30%;
 }
 
+.card {
+    border: none;
+    outline: none;
+    background-color: #fff;
+    border-radius: 20px;
+    transition: transform .3s;
+}
+
 .card-header {
     background-color: #A13333 !important;
 }
@@ -86,10 +94,48 @@ html {
     color: white;
 }
 
+.card-title{
+    padding: 0!important;
+    margin: 0 5px 0 5px!important;
+    font-weight: bold;
+    font-size: calc((100vw/100)*2);
+}
+
+.text1 {
+    font-size: 15px;
+    color: #a39ea3;
+}
+
+.info {
+    margin-top: 20px;
+    line-height: 10px;
+}
+
+.ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.active-color {
+    color: black !important;
+    font-weight: bold;
+}
+
+.box-shadow-product {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
 .center-item {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.center-vertical {
+    display: flex;
     align-items: center;
 }
 

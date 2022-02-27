@@ -7,11 +7,6 @@
         height: 250px;
         resize: none;
     }
-
-    .card-color-dashboard {
-        background-color: #ad1714 !important;
-        color: white;
-    }
 </style>
 @endsection
 

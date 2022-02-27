@@ -39,7 +39,7 @@ class SocialiteAuthController extends Controller
                 } else {
                     //Masuk Halaman User Admin
                     session(['role' => $data['data']['user']['role'], '_userId' => $data['data']['user']['_id'], '_jwtToken' => $data['data']['access_token']]);
-                    return redirect()->route('admindashboard.index');
+                    return redirect()->route('daftar-lapak.index');
                 }
             }
         } catch (Exception $exception) {

@@ -39,9 +39,11 @@ class LoginController extends Controller
 
         $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
             "email" => $request->input('email'),
-            "password" => $request->input('password')
+            "password" => $request->input('password'),
+            "type" => "manual"
         ]);
         $data = $responseData->collect();
+
         if ($responseData->failed()) {
             return back()->withErrors(['error' => $data['message']]);
         } else {

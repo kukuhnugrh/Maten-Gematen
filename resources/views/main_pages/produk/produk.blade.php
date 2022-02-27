@@ -72,7 +72,7 @@
 @section('content-JS')
 <script>
     let data = <?php echo json_encode($response_produk) ?>;
-    
+
     function showProduk(data) {
         var produk_html = "<div class='col-lg-3 col-sm-4 col-xs-2 mb-3'>" +
             "<a href='" + data.link_detail + "' style='text-decoration: none; color: black;'>" +
@@ -111,7 +111,7 @@
 
     $(document).ready(function() {
         $("#data-produk").remove();
-        if(data.length != 0) {
+        if (data.length != 0) {
             $("#body-produk").append('<div class="row" id="data-produk"></div>');
             data.forEach(produk => {
                 $("#data-produk").append(showProduk(produk));
@@ -122,7 +122,7 @@
 
         $("#semua-produk").click(function(e) {
             $("#data-produk").remove();
-            if(data.length != 0) {
+            if (data.length != 0) {
                 $("#body-produk").append('<div class="row" id="data-produk"></div>');
                 data.forEach(produk => {
                     $("#data-produk").append(showProduk(produk));
@@ -139,15 +139,15 @@
 
         $("#produk-tersedia").click(function(e) {
             $("#data-produk").remove();
-            if(data.length != 0) {
+            if (data.length != 0) {
                 $("#body-produk").append('<div class="row" id="data-produk"></div>');
                 var count = 0;
                 data.forEach(produk => {
-                    if (produk.penjualan_produk != 0) {
+                    if (produk.stok_produk != 0) {
                         count++;
                         $("#data-produk").append(showProduk(produk));
                     }
-                    if (count == 0){
+                    if (count == 0) {
                         $("#data-produk").remove();
                         $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Tersedia</div>');
                     }
@@ -164,15 +164,15 @@
 
         $("#produk-kosong").click(function(e) {
             $("#data-produk").remove();
-            if(data.length != 0) {
+            if (data.length != 0) {
                 $("#body-produk").append('<div class="row" id="data-produk"></div>');
                 var count = 0;
                 data.forEach(produk => {
-                    if (produk.penjualan_produk <= 0) {
+                    if (produk.stok_produk <= 0) {
                         count++;
                         $("#data-produk").append(showProduk(produk));
                     }
-                    if (count == 0){
+                    if (count == 0) {
                         $("#data-produk").remove();
                         $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Kosong</div>');
                     }

@@ -1,54 +1,16 @@
 @extends('layouts/master')
 @section('info-halaman', 'List Produk')
 
-@section('content-CSS')
-<style>
-    .card {
-        border: none;
-        outline: none;
-        background-color: #fff;
-        border-radius: 20px;
-        transition: transform .3s;
-    }
-
-    .text1 {
-        font-size: 15px;
-        color: #a39ea3;
-    }
-
-    .info {
-        margin-top: 20px;
-        line-height: 10px;
-    }
-
-    .ellipsis {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .active-color {
-        color: black !important;
-        font-weight: bold;
-    }
-
-    .box-shadow-product {
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
-</style>
-@endsection
-
 @section('content')
 <div id="main-content" class="d-flex flex-column">
 
     <div class="d-flex justify-content-start mb-3">
         <input class="form-control me-2 w-50" type="search" id="search-input" placeholder="Search" aria-label="Search" oninput="searchAction(this.value)">
-        <a href=" {{route('produkku.viewCreateProduk')}}" class="btn text-white col-md-2" style="background-color: #A13333;">Tambah Produk</a>
+        <a href=" {{route('produkku.viewCreateProduk')}}" class="btn btn-primary text-white col-md-2">Tambah Produk</a>
     </div>
 
     <div class="card ">
-        <div class="card-header" style="background-color: #A13333">
+        <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
                     <button id="semua-produk" class="nav-link active active-color" style="color: white;">Semua Produk</button>
@@ -105,7 +67,7 @@
                 }
             });
         } else {
-            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Produk Tidak Ditemukan</div>');
+            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Produk Tidak Ditemukan</span></div>');
         }
     }
 
@@ -117,7 +79,7 @@
                 $("#data-produk").append(showProduk(produk));
             });
         } else {
-            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+            $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Belum Ada Produk Terdaftar</span></div>');
         }
 
         $("#semua-produk").click(function(e) {
@@ -128,7 +90,7 @@
                     $("#data-produk").append(showProduk(produk));
                 });
             } else {
-                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Belum Ada Produk Terdaftar</span></div>');
             }
             $("#search-input").val("");
             $("#semua-produk").removeClass("active active-color").addClass("active active-color");
@@ -149,11 +111,11 @@
                     }
                     if (count == 0) {
                         $("#data-produk").remove();
-                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Tersedia</div>');
+                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Tidak Ada Produk Tersedia</span></div>');
                     }
                 });
             } else {
-                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Belum Ada Produk Terdaftar</span></div>');
             }
             $("#search-input").val("");
             $("#semua-produk").removeClass("active active-color");
@@ -174,11 +136,11 @@
                     }
                     if (count == 0) {
                         $("#data-produk").remove();
-                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Tidak Ada Produk Kosong</div>');
+                        $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Tidak Ada Produk Kosong</span></div>');
                     }
                 });
             } else {
-                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center">Belum Ada Produk Terdaftar</div>');
+                $("#body-produk").append('<div id="data-produk" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Belum Ada Produk Terdaftar</span></div>');
             }
             $("#search-input").val("");
             $("#semua-produk").removeClass("active active-color");

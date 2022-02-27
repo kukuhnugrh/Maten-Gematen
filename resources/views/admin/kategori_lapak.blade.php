@@ -13,7 +13,7 @@
 <div id="main-content" class="d-flex flex-column ">
     <div class="d-flex">
         <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-warning col-md-2 mb-3 me-3">Tutorial Menambah Kategori</button>
-        <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-primary col-md-2 mb-3 me-3">Tambah Kategori</button>
+        <button type="button" id="tutorial-menambah-kategori" data-bs-toggle="modal" data-bs-target="#tutorial-menambah" class="btn btn-primary col-md-2 mb-3 me-3">Tambah Kategori</button>
     </div>
     <div class="card">
         <div class="card-body">
@@ -78,6 +78,46 @@
     </div>
 </div>
 <!-- AKHIR MODAL -->
+@endsection
+
+@section('ModalTutorialMenambahKategori')
+<div class="modal fade" id="tutorial-menambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="form-tutorial" name="form-tutorial" class="form-horizontal">
+            <div class="modal-content">
+                <div class="modal-header card-color-dashboard">
+                    <h5 class="modal-title" id="modal-judul">Tutorial Menambah Kategori</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success alert-dismissible fade show" id="alert-tutorial" role="alert"></div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="hidden" class="form-control" name="idKategori" id="idKategori">
+                            <div class="form-group">
+                                <label for="namaKategori">Nama Kategori</label>
+                                <input type="text" class="form-control" name="namaKategori" id="namaKategori">
+                                <div class="alert-message text-danger" id="namaKategoriError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="iconKategori">Nama Icon Kategori</label>
+                                <input type="text" class="form-control" name="iconKategori" id="iconKategori" placeholder="Contoh: format-list-bulleted-square">
+                                <div class="alert-message text-danger" id="iconKategoriError"></div>
+                            </div>
+                            <div>
+                                <p class="d-flex justify-content-end" style="font-size: 0.875em;">Tampat mencari icon : <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="tombol-cancel" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="tambah-kategori">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 
 @section('content-JS')

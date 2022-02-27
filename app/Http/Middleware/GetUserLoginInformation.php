@@ -19,9 +19,10 @@ class GetUserLoginInformation
     {
 
         if ($request->session()->has('_jwtToken')) {
-            if ($this->getNewToken($request, $request->session()->get('_jwtToken'))) {
-                return $next($request);
-            }
+            // if ($this->getNewToken($request, $request->session()->get('_jwtToken'))) {
+            //     return $next($request);
+            // }
+            return $next($request);
         }
         $request->session()->flush();
         return redirect()->route('login.web');

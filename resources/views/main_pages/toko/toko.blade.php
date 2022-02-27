@@ -1,8 +1,10 @@
 @extends('layouts/master')
 @section('info-halaman', 'Detail Lapak')
+
 @section('content-CSS')
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 @endsection
+
 @section('content')
 <div id="main-content" class="d-flex flex-column">
     @if (session('status_update_lapak'))
@@ -16,7 +18,7 @@
         @method('PUT')
         <div class="card mb-3">
             <div class="card-header card-color-dashboard">
-                Informasi Toko
+                <span class="card-title center-vertical">Informasi Lapak</span>
             </div>
             <div class="card-body">
                 <div class="col-11">
@@ -82,9 +84,8 @@
             </div>
         </div>
         <div class="card mb-3">
-
             <div class="card-header card-color-dashboard">
-                Alamat Toko
+                <span class="card-title center-vertical">Alamat Lapak</span>
             </div>
             <div class="card-body">
                 <div class="col-11">

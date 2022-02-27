@@ -31,9 +31,14 @@ class GetUserLoginInformation
     {
         $verify = false;
         $newToken = Http::withToken($token)->accept('application/json')->acceptJson()->post('http://ecommerce-api.paroki-gmaklaten.web.id/api/auth/refresh-token')->collect();
+        
         if (isset($newToken['success'])) {
-            $request->session()->put('_jwtToken', $newToken['data']['access_token']);
-            $verify = true;
+            if ($newToken['success'] == true) {
+                $request->session()->put('_jwtToken', $newToken['data']['access_token']);
+                $verify = true;
+            }else {
+                $verify = false;
+            } 
         }
 
         return $verify;

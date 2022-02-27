@@ -86,9 +86,9 @@
     <div id="main" class="my-3 px-3">
         <section>
             <nav id="main-navbar" class="navbar mb-3">
-                <div class="container">
+                <div class="container-fluid">
                     <i class="d-flex mdi mdi-menu cursor-pointer text-white d-none"></i>
-                    <h3 class="fw-bold text-white">@yield('info-halaman')</h3>
+                    <h3 class="fw-bold text-white m-0">@yield('info-halaman')</h3>
                     <div class="d-flex flex-grow-1 justify-content-end align-items-center">
                         <i class="mdi mdi-account text-white"></i>
                         <span>Halo Admin</span>

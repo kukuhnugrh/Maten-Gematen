@@ -3,11 +3,6 @@
 
 @section('content-CSS')
 <style>
-    .card-color-dashboard {
-        background-color: #8B0000 !important;
-        color: white;
-    }
-
     .actionKategori {
         margin: -5px 0px -5px 0px;
     }
@@ -16,29 +11,27 @@
 
 @section('content')
 <div id="main-content" class="d-flex flex-column ">
-    <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-primary col-md-2 mb-3">Tambah Kategori</button>
+    <div class="d-flex">
+        <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-warning col-md-2 mb-3 me-3">Tutorial Menambah Kategori</button>
+        <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-primary col-md-2 mb-3 me-3">Tambah Kategori</button>
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-start">
 
             </div>
             <div class="table-responsive">
-                <table class="table table-borderless table-hover " id="tabel-kategori" cellspacing="0" width="100%">
-
+                <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-kategori" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th scope="col" width="80%">Nama Kategori</th>
-                            <th scope="col" width="20%">Action</th>
+                            <th scope="col" width="20%" class="center-item">Action</th>
                         </tr>
                     </thead>
-
                 </table>
             </div>
-
         </div>
     </div>
-
-
 </div>
 @endsection
 
@@ -73,10 +66,6 @@
                                 <p class="d-flex justify-content-end" style="font-size: 0.875em;">Tampat mencari icon : <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a></p>
 
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -97,10 +86,10 @@
 
     function listKategori(kategori) {
         let dataKategori = kategori["_id"] + '_' + kategori["iconText"] + '_' + kategori["iconName"];
-        let data = '<tr>' +
+        let data = '<tr style="border-bottom: 1px solid #dcdde1;">' +
             '<td>' + kategori["iconName"] + '</td>' +
             '<td>' +
-            '<button type="button" id="edit-kategori" data-bs-toggle="modal" data-id="' + dataKategori + '" data-bs-target="#tambah-edit-kategori" class="btn btn-outline-danger actionKategori">Edit</button>' +
+            '<button type="button" id="edit-kategori" data-bs-toggle="modal" data-id="' + dataKategori + '" data-bs-target="#tambah-edit-kategori" class="btn btn-outline-success actionKategori center-item">Edit</button>' +
             '</td>' +
             '</tr>';
         return data;

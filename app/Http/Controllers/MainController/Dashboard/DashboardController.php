@@ -13,6 +13,9 @@ class DashboardController extends Controller
     {
         $responseDetailLapak = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/' . session('_lapakId') . '/get')->collect();
         $produk = $responseDetailLapak['data']['produk_lapak'];
-        return view('main_pages/dashboard/dashboard', ['lapak' => $responseDetailLapak]);
+        if (count($produk) != 0){
+            $produk = $produk->sortBy('penjualan_produk');
+        }
+        return view('main_pages/dashboard/dashboard', ['lapak' => $responseDetailLapak, 'produk' => $produk]);
     }
 }

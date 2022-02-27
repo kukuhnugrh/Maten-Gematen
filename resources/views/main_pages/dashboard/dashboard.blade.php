@@ -1,15 +1,6 @@
 @extends('layouts/master')
 @section('info-halaman', 'Dashboard')
 
-@section('content-CSS')
-<style>
-    .card-color-dashboard {
-        background-color: #A13333 !important;
-        color: white;
-    }
-</style>
-@endsection
-
 @section('content')
 <div id="main-content" class="d-flex flex-column">
     <div class="card">
@@ -69,29 +60,21 @@
                             Produk Terlaris
                         </div>
                         <div class="card-body">
-                            <ul class="list-group list-group-flush p-0">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Baju Batik
-                                    <span class="badge bg-primary rounded-pill">1002</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Baju Batik
-                                    <span class="badge bg-primary rounded-pill">1002</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Baju Batik
-                                    <span class="badge bg-primary rounded-pill">1002</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Baju Batik
-                                    <span class="badge bg-primary rounded-pill">1002</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Baju Batik
-                                    <span class="badge bg-primary rounded-pill">1002</span>
-                                </li>
-
-                            </ul>
+                            @if (count($produk) == 0)
+                                <div class="container-fluid d-flex justify-content-center align-items-center h-100 fw-bold">
+                                    Belum ada Produk Terjual
+                                </div>
+                            @else
+                                @foreach ( $produk as $p )
+                                    <ul class="list-group list-group-flush p-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            {{ $p['nama_produk'] }}
+                                            <span class="badge bg-primary rounded-pill">{{ $p['penjualan_produk'] }}</span>
+                                        </li>
+                                    </ul>
+                                    @endforeach
+                            @endif
+                            
                         </div>
                     </div>
                 </div>

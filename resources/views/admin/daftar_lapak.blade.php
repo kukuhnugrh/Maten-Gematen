@@ -14,7 +14,7 @@
 <div id="main-content" class="d-flex flex-column">
     <div class="container-fluid p-0">
         <div class="card ">
-            <div class="card-header" style="background-color: #8B0000">
+            <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <button id="semua-lapak" class="nav-link active active-color" style="color: white;">Semua Lapak</button>

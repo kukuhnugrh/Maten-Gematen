@@ -15,6 +15,10 @@ html {
     z-index: 1030;
 }
 
+#main, section {
+    min-height: calc(100vh - 2rem);
+}
+
 .mdi {
     font-size: 1.67rem;
     color: black;

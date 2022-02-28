@@ -100,7 +100,7 @@
     </div>
 
     @yield('tambahanModal')
-    @yield('ModalTutorialMenambahKategori')
+    @yield('tutorialMenambahKategoriModal')
     
     <script>
         $(document).ready(function() {

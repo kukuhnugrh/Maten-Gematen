@@ -66,11 +66,12 @@ Route::middleware(['auth.login.information'])->group(function () {
 
         Route::group(['prefix' => 'admin/verifikasiLapak', 'as' => 'verifikasi-lapak.'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'Admin\Verifikasi\VerifikasiController@indexVerifikasiLapak']);
-            Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatus']);
+            Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusLapak']);
         });
 
         Route::group(['prefix' => 'admin/verifikasiTransaksi', 'as' => 'verifikasi-transaksi.'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'Admin\Verifikasi\VerifikasiController@indexVerifikasiTransaksi']);
+            Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusTransaksi']);
         });
     });
 });

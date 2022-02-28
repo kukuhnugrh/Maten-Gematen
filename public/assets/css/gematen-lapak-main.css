@@ -77,8 +77,8 @@ html {
 }
 
 #main-content img {
-    max-width: auto;
-    max-height: 30%;
+    width: 100%;
+    height: auto;
 }
 
 .card {
@@ -132,15 +132,23 @@ html {
 }
 
 .center-item {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.center-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
 .center-vertical {
     display: flex;
     align-items: center;
+}
+
+#produk-transaksi {
+    width: 90%;
 }
 
 @media (max-width: 768px) {

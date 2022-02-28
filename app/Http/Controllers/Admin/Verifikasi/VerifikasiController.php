@@ -48,7 +48,7 @@ class VerifikasiController extends Controller
     public function indexVerifikasiTransaksi()
     {
         $transaksi = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/get')->collect();
-        //return $kategori;
-        return view('admin/verifikasi_transaksi', ['transaksi' => $transaksi]);
+        
+        return view('admin/verifikasi_transaksi', ['dataTransaksi' => $transaksi]);
     }
 }

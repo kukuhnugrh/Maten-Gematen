@@ -39,7 +39,7 @@
         var produk_html = "<div class='col-lg-3 col-sm-4 col-xs-2 mb-3'>" +
             "<a href='" + data.link_detail + "' style='text-decoration: none; color: black;'>" +
             "<div class='card box-shadow-product'>" +
-            "<img src='" + "https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/" + data.gambar_produk[0] + "' class='rounded' width='100%'' height='160px'>" +
+            "<img src='" + "https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/" + data.gambar_produk[0] + "' class='rounded' width='100%' height='160px'>" +
             "<div class='p-2'>" +
             "<div style='height: 50px;'>" +
             "<h4 class='card-title ellipsis'>" + data.nama_produk + "</h4>" +

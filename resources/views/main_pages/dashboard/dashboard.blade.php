@@ -67,12 +67,12 @@
                             @else
                                 @foreach ( $produk as $p )
                                     <ul class="list-group list-group-flush p-0">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom">
                                             {{ $p['nama_produk'] }}
                                             <span class="badge bg-primary rounded-pill">{{ $p['penjualan_produk'] }}</span>
                                         </li>
                                     </ul>
-                                    @endforeach
+                                @endforeach
                             @endif
                             
                         </div>

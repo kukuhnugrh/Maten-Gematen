@@ -12,12 +12,12 @@
             </div>
             @else
             @php
-            $count = 0;
+                $count = 0;
             @endphp
             @foreach($dataTransaksi['data'] as $dt)
             @if ($dt['status'] == "VERIFIKASI")
             @php
-            $count++;
+                $count++;
             @endphp
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="accordion-item items-shadow">

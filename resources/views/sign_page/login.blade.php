@@ -28,7 +28,7 @@
 <body>
     <div id="wrapper" class="container-fluid">
         <div id="form-wrapper" class="p-4">
-            <div id="login-header">
+            <div id="login-header" class="h-25 d-flex flex-column justify-content-center align-items-center"> 
                 <div class="d-flex justify-content-center align-items-center mb-3">
                     <img src="{{ asset('assets/img/icon.ico') }}" class="rounded-circle">
                     <p class="gradient-text text-center w-100">Mande Gematen</p>

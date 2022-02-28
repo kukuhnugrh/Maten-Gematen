@@ -42,7 +42,7 @@
             "<img src='" + "https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/" + data.gambar_produk[0] + "' class='rounded' width='100%'' height='160px'>" +
             "<div class='p-2'>" +
             "<div style='height: 50px;'>" +
-            "<h6 class='card-title ellipsis'>" + data.nama_produk + "</h6>" +
+            "<h4 class='card-title ellipsis'>" + data.nama_produk + "</h4>" +
             "</div>" +
             "<div class='info card-text'>" +
             "<p class='d-block'>Rp. " + data.harga_produk + "</p>" +

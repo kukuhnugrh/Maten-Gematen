@@ -98,7 +98,7 @@ html {
     padding: 0!important;
     margin: 0 5px 0 5px!important;
     font-weight: bold;
-    font-size: calc((100vw/100)*2);
+    font-size: calc((100vw/100)*1.5);
 }
 
 .text1 {

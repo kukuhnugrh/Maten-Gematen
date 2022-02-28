@@ -12,20 +12,17 @@
 @section('content')
 <div id="main-content" class="d-flex flex-column ">
     <div class="d-flex">
-        <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-warning col-md-2 mb-3 me-3">Tutorial Menambah Kategori</button>
-        <button type="button" id="tutorial-menambah-kategori" data-bs-toggle="modal" data-bs-target="#tutorial-menambah" class="btn btn-primary col-md-2 mb-3 me-3">Tambah Kategori</button>
+        <button type="button" id="tutorial-menambah-kategori" data-bs-toggle="modal" data-bs-target="#tutorial-menambah" class="btn btn-warning col-md-2 mb-3 me-3">Tutorial Menambah Kategori</button>
+        <button type="button" id="tambah-kategori" data-bs-toggle="modal" data-bs-target="#tambah-edit-kategori" class="btn btn-primary col-md-2 mb-3 me-3">Tambah Kategori</button>
     </div>
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-start">
-
-            </div>
             <div class="table-responsive">
                 <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-kategori" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th scope="col" width="80%">Nama Kategori</th>
-                            <th scope="col" width="20%" class="center-item">Action</th>
+                            <th scope="col" width="20%" class="center-item w-100">Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -80,7 +77,8 @@
 <!-- AKHIR MODAL -->
 @endsection
 
-@section('ModalTutorialMenambahKategori')
+@section('tutorialMenambahKategoriModal')
+
 <div class="modal fade" id="tutorial-menambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form id="form-tutorial" name="form-tutorial" class="form-horizontal">
@@ -89,30 +87,29 @@
                     <h5 class="modal-title" id="modal-judul">Tutorial Menambah Kategori</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success alert-dismissible fade show" id="alert-tutorial" role="alert"></div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="hidden" class="form-control" name="idKategori" id="idKategori">
-                            <div class="form-group">
-                                <label for="namaKategori">Nama Kategori</label>
-                                <input type="text" class="form-control" name="namaKategori" id="namaKategori">
-                                <div class="alert-message text-danger" id="namaKategoriError"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="iconKategori">Nama Icon Kategori</label>
-                                <input type="text" class="form-control" name="iconKategori" id="iconKategori" placeholder="Contoh: format-list-bulleted-square">
-                                <div class="alert-message text-danger" id="iconKategoriError"></div>
-                            </div>
-                            <div>
-                                <p class="d-flex justify-content-end" style="font-size: 0.875em;">Tampat mencari icon : <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a></p>
-
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-kategori" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="20%">Langkah</th>
+                                    <th scope="col" width="80%" class="center-item w-100">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #dcdde1;">
+                                    <td class="text-center">1.</td>
+                                    <td>Buka Halaman Website <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a> Untuk Mencari Icon</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #dcdde1;">
+                                    <td class="text-center">2.</td>
+                                    <td>Cari Icon Yang Diinginkan Dengan Menginputkan Nama Icon Pada Kolom Search <img width="50%" src="{{ asset('assets/img/Halaman_utama_MDI.png') }}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="tombol-cancel" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary btn-block" id="tombol-simpan" value="tambah-kategori">Simpan</button>
                 </div>
             </div>
         </form>
@@ -129,7 +126,7 @@
         let data = '<tr style="border-bottom: 1px solid #dcdde1;">' +
             '<td>' + kategori["iconName"] + '</td>' +
             '<td>' +
-            '<button type="button" id="edit-kategori" data-bs-toggle="modal" data-id="' + dataKategori + '" data-bs-target="#tambah-edit-kategori" class="btn btn-outline-success actionKategori center-item">Edit</button>' +
+            '<button type="button" id="edit-kategori" data-bs-toggle="modal" data-id="' + dataKategori + '" data-bs-target="#tambah-edit-kategori" class="btn btn-outline-success actionKategori center-item w-100">Edit</button>' +
             '</td>' +
             '</tr>';
         return data;
@@ -154,6 +151,12 @@
             $('#namaKategoriError').text('');
             $('#iconKategoriError').text('');
             $('#tombol-simpan').val('tambah'); //tombol simpan
+        });
+
+        $("#tutorial-menambah-kategori").click(function() {
+            $('.alert').css('display', 'none')
+            $('#form-tutorial').trigger("reset"); //mereset semua input dll didalamnya
+            $('#modal-judul').html("Tutorial Tambah Kategori"); //valuenya tambah pegawai baru
         });
 
         $('body').on('click', '#edit-kategori', function() {

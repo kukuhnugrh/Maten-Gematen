@@ -28,7 +28,7 @@ class VerifikasiController extends Controller
         return view('admin/verifikasi_lapak', ['dataLapak' => $tmp_lapak_verify]);
     }
 
-    public function updateStatus(Request $request)
+    public function updateStatusLapak(Request $request)
     {
         $response_detail_lapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $request->idLapak . "/get")->collect();
         //return $response_detail_lapak;
@@ -49,6 +49,16 @@ class VerifikasiController extends Controller
     {
         $transaksi = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/get')->collect();
         
+        return view('admin/verifikasi_transaksi', ['dataTransaksi' => $transaksi]);
+    }
+
+    public function updateStatusTransaksi(Request $request)
+    {
+        $updateLapak = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/update-status/' . $request->idTransaksi, [
+            "status" => $request->statusTransaksi,
+        ]);
+        $transaksi = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/get')->collect();
+
         return view('admin/verifikasi_transaksi', ['dataTransaksi' => $transaksi]);
     }
 }

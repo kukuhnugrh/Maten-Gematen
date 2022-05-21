@@ -22,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- MDI Icons -->
-    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
 </head>
 
 <body>
@@ -39,34 +39,28 @@
         <!-- CONTENT -->
         <div id="sidenav-content" class="flex-grow-1 overflow-auto">
             <ul class="nav flex-column py-3">
-                <!-- <li class="nav-item mb-3 w-100">
-                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'dashboard') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'dashboard' ? route('admindashboard.index') : '#' }}">
-                        <i class="mdi mdi-monitor-dashboard"></i>
-                        <span class="mx-3 fw-bold">Dashboard</span>
-                    </a>
-                </li> -->
                 <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'daftar-lapak') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'kategori' ? route('daftar-lapak.index') : '#' }}">
-                        <i class="mdi mdi-credit-card-outline"></i>
-                        <span class="mx-3 fw-bold">Lapak</span>
+                        <i class="mdi mdi-store-outline"></i>
+                        <span class="mx-3 fw-bold">Daftar Lapak</span>
                     </a>
                 </li>
                 <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'kategori-produk') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'kategori' ? route('kategori-produk.index') : '#' }}">
-                        <i class="mdi mdi-store-outline"></i>
+                        <i class="mdi mdi-ballot-outline"></i>
                         <span class="mx-3 fw-bold">Kategori Produk</span>
                     </a>
                 </li>
                 <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'verifikasi-lapak') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'verifikasi-lapak' ? route('verifikasi-lapak.index') : '#' }}">
-                        <i class="mdi mdi-store-outline"></i>
+                        <i class="mdi mdi-shield-check"></i>
                         <span class="mx-3 fw-bold">Verifikasi Lapak</span>
                     </a>
                 </li>
                 <li class="nav-item mb-3 w-100">
-                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'verifikasi-transaksi') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'verifikasi-transaksi' ? route('verifikasi-transaksi.index') : '#' }}">
-                        <i class="mdi mdi-store-outline"></i>
-                        <span class="mx-3 fw-bold">Verifikasi Transaksi</span>
+                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'verifikasi-rating') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'verifikasi-rating' ? route('verifikasi-rating.index') : '#' }}">
+                        <i class="mdi mdi-star-outline"></i>
+                        <span class="mx-3 fw-bold">Verifikasi Rating</span>
                     </a>
                 </li>
             </ul>
@@ -101,7 +95,7 @@
 
     @yield('tambahanModal')
     @yield('tutorialMenambahKategoriModal')
-    
+
     <script>
         $(document).ready(function() {
             $("i.mdi-menu").click(function(e) {

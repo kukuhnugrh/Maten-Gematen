@@ -26,7 +26,7 @@ class KategoriAdminController extends Controller
             $kategori = $responseKategori->collect();
 
             if ($responseKategori->failed()) {
-                return response()->json($kategori['errors'], 422);
+                return response()->json($kategori['message'], 422);
             } else {
                 return $kategori;
             }

@@ -10,7 +10,7 @@
     <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}?v=<?php echo time(); ?>" />
     @yield('content-CSS')
 
     <!-- Bootstrap CSS -->
@@ -23,7 +23,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- MDI Icons -->
-    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
 
 
 </head>
@@ -36,7 +36,7 @@
             <i class="mdi mdi-close cursor-pointer position-absolute top-0 end-0 d-none"></i>
             <a href="#" class="d-flex justify-content-center align-items-center p-3 text-decoration-none h-100">
                 <img id="sidenav-logo" src="{{ asset('assets/img/icon.ico') }}" class="rounded-circle">
-                <span class="mx-3 fw-bold text-white">Lapak Gematen</span>
+                <span class="mx-3 fw-bold text-white">Mande Gematen</span>
             </a>
         </div>
         <!-- CONTENT -->
@@ -57,13 +57,13 @@
                 <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'tokoku') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'tokoku' ? route('tokoku.index') : '#' }}">
                         <i class="mdi mdi-store-outline"></i>
-                        <span class="mx-3 fw-bold">Tokoku</span>
+                        <span class="mx-3 fw-bold">Lapakku</span>
                     </a>
                 </li>
                 <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'historiku') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'historiku' ? route('historiku') : '#' }}">
                         <i class="mdi mdi-history"></i>
-                        <span class="mx-3 fw-bold">Histori Penjualan</span>
+                        <span class="mx-3 fw-bold">Riwayat Penjualan</span>
                     </a>
                 </li>
             </ul>
@@ -88,7 +88,7 @@
                     <h3 class="fw-bold text-white m-0">@yield('info-halaman')</h3>
                     <div class="d-flex flex-grow-1 justify-content-end align-items-center">
                         <i class="mdi mdi-account text-white"></i>
-                        <span>Halo User</span>
+                        <span>Halo {{Request::session()->get('_namaUser')}}</span>
                     </div>
                 </div>
             </nav>

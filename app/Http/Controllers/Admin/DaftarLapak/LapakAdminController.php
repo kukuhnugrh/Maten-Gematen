@@ -16,7 +16,8 @@ class LapakAdminController extends Controller
         $tmp_lapak_verify = array();
 
         foreach ($dataLapak['data'] as $lapak) {
-            if ($lapak['status_lapak'] != "VERIFY") {
+            if ($lapak['status_lapak'] != "UNVERIFIED") {
+                $lapak['link_detail'] = route("daftar-lapak.detaillapak", Crypt::encryptString($lapak['_id']));
                 array_push($tmp_lapak_verify, $lapak);
             }
         }
@@ -33,19 +34,18 @@ class LapakAdminController extends Controller
 
     public function updateLapak(Request $request)
     {
-        // dd($request);
         $response_detail_lapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $request->idLapak . "/get")->collect();
         //return $response_detail_lapak;
-        $updateLapak = Http::withToken(session('_jwtToken'))->accept('application/json')->acceptJson()->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update', [
-            "id_lapak" => $request->idLapak,
-            "nama_lapak" => $response_detail_lapak['nama_lapak'],
-            "wilayah" => $response_detail_lapak['wilayah'],
-            "deskripsi_lapak" => $response_detail_lapak['deskripsi_lapak'],
-            "alamat_lapak" => $response_detail_lapak['alamat_lapak'],
+        $updateLapak = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . $request->idLapak, [
+            "nama_lapak" => $response_detail_lapak['data']['nama_lapak'],
+            "paroki_id" => $response_detail_lapak['data']['paroki_lapak']['paroki_id'],
+            "deskripsi_lapak" => $response_detail_lapak['data']['deskripsi_lapak'],
+            "alamat_lapak" => $response_detail_lapak['data']['alamat_lapak'],
+            "no_telepon_lapak" => $response_detail_lapak['data']['no_telepon_lapak'],
             "status_lapak" => $request->statusLapak,
             "catatan_lapak" => $request->catatanAdmin
         ]);
 
-        return redirect()->route('daftar-lapak.detaillapak', Crypt::encryptString($updateLapak['lapak']['_id']));
+        return redirect()->route('daftar-lapak.detaillapak', Crypt::encryptString($request->idLapak))->with("status_update_catatan", "Berhasil Update Catatan");
     }
 }

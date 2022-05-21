@@ -22,11 +22,16 @@
 <div id="main-content" class="d-flex flex-column">
 
     <div class="card mb-3">
+
         <div class="card-header card-color-dashboard">
             Catatan Admin
         </div>
         <div class="card-body">
-
+            @if (session('status_update_catatan'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status_update_catatan') }}
+            </div>
+            @endif
             <form action="{{  route('daftar-lapak.updateLapak')  }}" method="POST">
                 @csrf
                 <input type="text" name="idLapak" value="{{$detailLapak['_id']}}" hidden>
@@ -63,41 +68,47 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-borderless table-hover " id="tabel-kategori" cellspacing="0" width="100%">
-
                     <tbody>
                         <tr>
-                            <th scope="col" width="30%">Nama Lapak</th>
-                            <td scope="col" width="60%">: {{$detailLapak['nama_lapak']}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">Nama Lapak</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['nama_lapak']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Wilayah</th>
-                            <td scope="col" width="60%">: {{$detailLapak['wilayah_lapak']['nama_wilayah']}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">Pemilik</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['nama_user']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Alamat Lapak</th>
-                            <td scope="col" width="60%">: {{$detailLapak['alamat_lapak']['detail_alamat']}}, Kel. {{$detailLapak['alamat_lapak']['kelurahan']}}, Kec. {{$detailLapak['alamat_lapak']['kecamatan']}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">Paroki</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['paroki_lapak']['nama_paroki']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Deskripsi Lapak</th>
-                            <td scope="col" width="60%">: {{$detailLapak['deskripsi_lapak']}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">Alamat Lapak</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['alamat_lapak']['detail_alamat']}}, Kel. {{$detailLapak['alamat_lapak']['kelurahan']}}, Kec. {{$detailLapak['alamat_lapak']['kecamatan']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Total Produk</th>
-                            <td scope="col" width="60%">: {{count($detailLapak['produk_lapak'])}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">Deskripsi Lapak</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['deskripsi_lapak']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Total Penjualan</th>
-                            <td scope="col" width="60%">: {{$detailLapak['penjualan_lapak']}}</td>
+                            <th class="resposinve-text" scope="col" width="30%">No WhatsApp Lapak</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['no_telepon_lapak']}}</td>
                         </tr>
                         <tr>
-                            <th scope="col" width="30%">Lokasi Lapak</th>
+                            <th class="resposinve-text" scope="col" width="30%">Total Produk</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{count($detailLapak['produk_lapak'])}}</td>
+                        </tr>
+                        <tr>
+                            <th class="resposinve-text" scope="col" width="30%">Total Penjualan</th>
+                            <td class="resposinve-text" scope="col" width="60%">: {{$detailLapak['penjualan_lapak']}}</td>
+                        </tr>
+                        <tr>
+                            <th class="resposinve-text" scope="col" width="30%">Lokasi Lapak</th>
                             @if($detailLapak['alamat_lapak']['longitude'] != null && $detailLapak['alamat_lapak']['latitude'] != null)
-                            <td scope="col" width="60%">: Aktif</td>
+                            <td class="resposinve-text" scope="col" width="60%">: Aktif</td>
                             @else
-                            <td scope="col" width="60%">: Tidak Aktif</td>
+                            <td class="resposinve-text" scope="col" width="60%">: Tidak Aktif</td>
                             @endif
                         </tr>
-
                     </tbody>
                 </table>
 
@@ -116,7 +127,7 @@
                 @foreach ($detailLapak['produk_lapak'] as $produk)
                 <div class="col-lg-3 col-sm-4 col-xs-2 mb-3">
                     <div class="card">
-                        <img src="{{ asset('assets/img/produk.jpg') }}" class="rounded" width="100%" alt="">
+                        <img src="{{ 'https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/' . $produk['gambar_produk'][0] }}" class="rounded" width="100%" height="160px" alt="">
                         <div class="p-2">
                             <div style="height: 50px;">
                                 <h6 class="card-title ellipsis">{{$produk['nama_produk']}}</h6>

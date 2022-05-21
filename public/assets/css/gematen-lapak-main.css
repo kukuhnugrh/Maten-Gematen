@@ -15,7 +15,8 @@ html {
     z-index: 1030;
 }
 
-#main, section {
+#main,
+section {
     min-height: calc(100vh - 2rem);
 }
 
@@ -76,9 +77,12 @@ html {
     border-radius: 5px;
 }
 
+#main-content {
+    min-height: calc(100vh - 7rem);
+}
+
 #main-content img {
     width: 100%;
-    height: auto;
 }
 
 .card {
@@ -98,11 +102,11 @@ html {
     color: white;
 }
 
-.card-title{
-    padding: 0!important;
-    margin: 0 5px 0 5px!important;
+.card-title {
+    padding: 0 !important;
+    margin: 0 5px 0 5px !important;
     font-weight: bold;
-    font-size: calc((100vw/100)*1.5);
+    font-size: calc((100vw/100)*1);
 }
 
 .text1 {
@@ -127,28 +131,83 @@ html {
     font-weight: bold;
 }
 
-.box-shadow-product, .items-shadow {
+.box-shadow-product,
+.items-shadow {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .center-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .center-horizontal {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 .center-vertical {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
 }
 
 #produk-transaksi {
     width: 90%;
+}
+
+.resposinve-text {
+    padding: 0;
+    font-size: calc((100vw/100)*1);
+}
+
+a.btn {
+    width: 75%;
+    height: calc((100vw/100)*2) !important;
+    line-height: normal;
+    font-size: calc((100vw/100)*1) !important;
+    padding: 0;
+}
+
+.accordion-header>button {
+    font-size: calc((100vw/100)*1) !important;
+}
+
+.contain {
+    object-fit: contain;
+    width: 100%;
+    /*height: 300px;  optional, you can remove it, but in my case it was good */
+}
+
+.border-gematen{
+    border: 1px solid #a39ea3;
+    border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+    .card-title {
+        padding: 0 !important;
+        margin: 0 5px 0 5px !important;
+        font-weight: bold;
+        font-size: calc((100vw/100)*2);
+    }
+
+    .accordion-header>button {
+        min-height: calc((100vw/100)*1.5);
+        font-size: calc((100vw/100)*2) !important;
+    }
+
+    .resposinve-text {
+        padding: 0;
+        font-size: calc((100vw/100)*1.5);
+    }
+
+    a.btn {
+        width: 75%;
+        height: calc((100vw/100)*3) !important;
+        line-height: normal;
+        font-size: calc((100vw/100)*1.5) !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -181,5 +240,29 @@ html {
         padding: 0 !important;
         margin-right: 3%;
         margin-left: 3%;
+    }
+
+    .card-title {
+        padding: 0 !important;
+        margin: 0 5px 0 5px !important;
+        font-weight: bold;
+        font-size: calc((100vw/100)*3);
+    }
+
+    .accordion-header>button {
+        min-height: calc((100vw/100)*2);
+        font-size: calc((100vw/100)*3) !important;
+    }
+
+    .resposinve-text {
+        padding: 0;
+        font-size: calc((100vw/100)*3);
+    }
+
+    a.btn {
+        width: 75%;
+        height: calc((100vw/100)*6) !important;
+        line-height: normal;
+        font-size: calc((100vw/100)*3) !important;
     }
 }

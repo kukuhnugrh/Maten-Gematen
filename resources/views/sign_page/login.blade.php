@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Mande Gematen</title>
 
     <!-- icon -->
@@ -28,8 +28,8 @@
 <body>
     <div id="wrapper" class="container-fluid">
         <div id="form-wrapper" class="p-4">
-            <div id="login-header" class="h-25 d-flex flex-column justify-content-center align-items-center"> 
-                <div class="d-flex justify-content-center align-items-center mb-3">
+            <div id="login-header" class="d-flex flex-column justify-content-center align-items-center"> 
+                <div class="d-flex justify-content-center align-items-center">
                     <img src="{{ asset('assets/img/icon.ico') }}" class="rounded-circle">
                     <p class="gradient-text text-center w-100">Mande Gematen</p>
                 </div>
@@ -37,7 +37,7 @@
             @error('error')
             <div class="text-danger text-center fs-6">{{ $message }}</div>
             @enderror
-            <div id="login-form" class="h-75 d-flex flex-column justify-content-center align-items-center">
+            <div id="login-form" class="d-flex flex-column justify-content-center align-items-center">
                 <form class="w-100 mb-5" action="{{route('login.post')}}" method="post">
                     @csrf
                     <div class="mb-3 w-100">
@@ -57,7 +57,9 @@
                         <div class="text-danger fs-6">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="background-color: #DC413E; border-color: #DC413E;">Login</button>
+                    <div class="h-25 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary w-75" style="background-color: #DC413E; border-color: #DC413E;">Masuk</button>
+                    </div>
                 </form>
                 <div class="mb-3" style="color: #7f8c8d;">
                     atau
@@ -65,7 +67,7 @@
                 <a id="login-with-google" href="{{ route('auth/google') }}">
                     <div class="d-flex justify-content-center align-items-center">
                         <img src="{{ asset('assets/img/google_icon.png') }}" class="rounded-circle">
-                        <p class="text-center">Masuk Dengan Google</p>
+                        <p class="text-center">Masuk Dengan Akun Google</p>
                     </div>
                 </a>
             </div>

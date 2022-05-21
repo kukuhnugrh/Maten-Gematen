@@ -34,7 +34,7 @@
             <div class="col">
                 <div class="d-flex align-items-center">
                     <i class="mdi mdi-account"></i>
-                    <span>Halo User</span>
+                    <span>Halo {{Request::session()->get('_namaUser')}}</span>
                 </div>
             </div>
             <div class="col">
@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h1 class="text-center">Isi Data Lapak</h1>
+                <h1 class="fw-bold text-center">ISI DATA LAPAK</h1>
             </div>
         </div>
         <div class="row">
@@ -59,62 +59,70 @@
                 <div class="d-flex justify-content-center">
                     <div class="col-6">
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white">
                                 Informasi Toko
                             </div>
                             <div class="card-body">
 
                                 <div class="mb-2">
-                                    <label for="namaLapak" class="form-label">*Nama Lapak</label>
+                                    <label for="namaLapak" class="form-label">Nama Lapak <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control wajib" id="namaLapak" name="namaLapak" oninput="checkTotalHuruf(this.value, 'nama_lapak')">
+                                        <input type="text" class="form-control wajib" id="namaLapak" name="nama_lapak" maxlength="100" value="{{old('nama_lapak')}}" oninput="checkTotalHuruf(this.value, 'nama_lapak')">
                                         <span class="input-group-text"><span id="totalNamaLapak">0</span>/100</span>
                                     </div>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('namaLapak')
+                                    @if ($errors->has('nama_lapak'))
+                                    @foreach ($errors->get('nama_lapak') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
-
+                                    @endforeach
+                                    @endif
                                 </div>
                                 <div class="mb-2">
-                                    <label for="wilayahLapak" class="form-label">*Wilayah Lapak</label>
-                                    <select class="form-select wajib" aria-label="Default select example" name="wilayahLapak" id="wilayahLapak">
-                                        <option value="" selected>Pilih Wilayah</option>
-                                        @foreach ($wilayahs as $wilayah)
-                                        <option value="{{$wilayah['_id'] .'_'.$wilayah['nama_wilayah']}}">{{$wilayah['nama_wilayah']}}</option>
+                                    <label for="parokiLapak" class="form-label">Paroki Lapak <span class="text-danger">*</span></label>
+                                    <select class="form-select wajib" aria-label="Default select example" name="paroki_lapak" id="parokiLapak">
+                                        <option value="" selected>Pilih Paroki</option>
+                                        @foreach ($parokis as $paroki)
+                                        <option value="{{$paroki['_id'] .'_'.$paroki['nama_paroki']}}">Paroki {{$paroki['nama_paroki']}}</option>
                                         @endforeach
                                     </select>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('wilayahLapak')
+                                    @if ($errors->has('paroki_lapak'))
+                                    @foreach ($errors->get('paroki_lapak') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
                                 </div>
                                 <div class="mb-2">
                                     <div class="d-flex bd-highlight">
-                                        <label for="deskripsiLapak" class="me-auto bd-highlight form-label">*Deskripsi Lapak</label>
+                                        <label for="deskripsiLapak" class="me-auto bd-highlight form-label">Deskripsi Lapak <span class="text-danger">*</span></label>
                                         <label class="bd-highlight form-label"><span id="totalDeskripsiLapak">0</span>/3000</span></label>
                                     </div>
-                                    <textarea class="form-control wajib" name="deskripsiLapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')"></textarea>
+                                    <textarea class="form-control wajib" name="deskripsi_lapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')">{{old('deskripsi_lapak')}}</textarea>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('deskripsiLapak')
+                                    @if ($errors->has('deskripsi_lapak'))
+                                    @foreach ($errors->get('deskripsi_lapak') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
                                 </div>
                                 <div class="mb-2">
-                                    <label for="noHandphoneLapak" class="form-label">*Nomor WhatsApp</label>
+                                    <label for="noHandphoneLapak" class="form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="noHandphoneLapak" onkeypress="return cekKarakter(event)">
+                                        <span class="input-group-text" id="basic-addon1">+62</span>
+                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{old('no_telepon_lapak')}}" onkeyup="cekKarakterWhatsapp(this.value)" onpaste="return false;">
                                     </div>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('noHandphoneLapak')
+                                    @if ($errors->has('no_telepon_lapak'))
+                                    @foreach ($errors->get('no_telepon_lapak') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
                                 </div>
 
                             </div>
                         </div>
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header text-white">
                                 Alamat Toko
                             </div>
                             <div class="card-body">
@@ -123,32 +131,38 @@
                                     <input type="text" class="form-control" value="Klaten" disabled>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="kecamatan" class="form-label">*Kecamatan</label>
+                                    <label for="kecamatan" class="form-label">Kecamatan <span class="text-danger">*</span></label>
                                     <select class="form-select wajib" name="kecamatan" id="kecamatan">
                                         <option value="" selected>-- Pilih Kecamatan --</option>
                                     </select>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('kecamatan')
+                                    @if ($errors->has('kecamatan'))
+                                    @foreach ($errors->get('kecamatan') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
                                 </div>
                                 <div class="mb-2">
-                                    <label for="kelurahan" class="form-label">*Kelurahan</label>
+                                    <label for="kelurahan" class="form-label">Kelurahan <span class="text-danger">*</span></label>
                                     <select class="form-select wajib" name="kelurahan" id="kelurahan">
                                         <option value="" selected>-- Pilih Kelurahan --</option>
                                     </select>
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('kelurahan')
+                                    @if ($errors->has('kelurahan'))
+                                    @foreach ($errors->get('kelurahan') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
                                 </div>
                                 <div class="mb-2">
-                                    <label for="detailAlamat" class="form-label">*Detail Alamat</label>
-                                    <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat">
+                                    <label for="detailAlamat" class="form-label">Detail Alamat <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{old('detailAlamat')}}">
                                     <div class="form-text wajib-isi text-danger"></div>
-                                    @error('detailAlamat')
+                                    @if ($errors->has('detailAlamat'))
+                                    @foreach ($errors->get('detailAlamat') as $message)
                                     <div class="form-text text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @endforeach
+                                    @endif
 
                                 </div>
 
@@ -170,7 +184,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end mb-3">
-                            <button type="submit" class="btn btn-primary" id="btnsimpan">Simpan</button>
+                            <button type="submit" class="btn btn-primary" id="btns                                                                           impan">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -194,12 +208,17 @@
             }
         }
 
-        function cekKarakter(e) {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (charCode >= 48 && charCode <= 57) {
-                return true
+        function cekKarakterWhatsapp(value, e) {
+            let noHandphone = value;
+            if (value.length == 1 && value[0] == 0) {
+                $('#noHandphoneLapak').val('');
+            } else if (value[0] == 0) {
+                $('#noHandphoneLapak').val(noHandphone.slice(1));
+            } else {
+                if (isNaN(value[value.length - 1])) {
+                    $('#noHandphoneLapak').val(noHandphone.slice(0, value.length - 1));
+                }
             }
-            return false;
         }
 
         function resetLokasi() {

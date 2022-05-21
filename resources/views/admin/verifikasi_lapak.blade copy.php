@@ -62,11 +62,13 @@
                             </table>
                             <div class="m-2">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
-                                    <button class="btn btn-primary d-flex justify-content-center align-items-center" id="update-status-button-{{$loop->index}}" target="status-update-form-{{$loop->index}}" onclick="sendFormData(this.id)">VERIFIED</button>
+                                    <a href="" class="btn btn-primary d-flex justify-content-center align-items-center" id="update-status-button" type="button">VERIFIED</a>
                                 </div>
-                                <form id="status-update-form-{{$loop->index}}" action="{{  route('verifikasi-lapak.updateStatus')  }}" method="POST" class="d-none">
+
+                                <form id="status-update-form" action="{{  route('verifikasi-lapak.updateStatus')  }}" method="POST" class="d-none">
                                     @csrf
-                                    <input type="text" value="{{$dl['_id']}}" id="idLapak-{{$loop->index}}" name="idLapak" hidden>
+                                    <label for="idLapak" hidden></label>
+                                    <input type="text" value="{{$dl['_id']}}" id="idLapak" name="idLapak" hidden>
                                 </form>
                             </div>
 
@@ -84,9 +86,14 @@
 
 @section('content-JS')
 <script>
-    function sendFormData(id) {
-        let target = $('#' + id).attr('target');
-        $("#" + target).submit();
+    function sendFormData(index, event) {
+
     }
+
+
+    $("#update-status-button").click(function(e) {
+        e.preventDefault();
+        $("#status-update-form").submit();
+    });
 </script>
 @endsection

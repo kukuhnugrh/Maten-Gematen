@@ -49,10 +49,10 @@ class LoginController extends Controller
         } else {
             if ($data['data']['user']['role'] == 'user') {
                 if ($data['data']['lapak'] == null) {
-                    session(['_userId' => $data['data']['user']['_id'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token']]);
+                    session(['_userId' => $data['data']['user']['_id'], '_namaUser' => $data['data']['user']['nama'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token']]);
                     return redirect()->route('new-lapak');
                 } else {
-                    session(['_userId' => $data['data']['user']['_id'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token'], '_lapakId' => $data['data']['lapak']['_id'], '_namaLapak' => $data['data']['lapak']['nama_lapak'], '_statusLapak' => $data['data']['lapak']['status_lapak'], '_catatanLapak' => $data['data']['lapak']['catatan_lapak']]);
+                    session(['_userId' => $data['data']['user']['_id'], '_namaUser' => $data['data']['user']['nama'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token'], '_lapakId' => $data['data']['lapak']['_id'], '_namaLapak' => $data['data']['lapak']['nama_lapak'], '_statusLapak' => $data['data']['lapak']['status_lapak'], '_catatanLapak' => $data['data']['lapak']['catatan_lapak']]);
                     return redirect()->route('home');
                 }
             } else {

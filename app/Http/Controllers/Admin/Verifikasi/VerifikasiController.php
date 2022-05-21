@@ -16,12 +16,10 @@ class VerifikasiController extends Controller
         $tmp_lapak_verify = array();
 
         foreach ($dataLapak['data'] as $lapak) {
-            if ($lapak['status_lapak'] == "VERIFY") {
+            if ($lapak['status_lapak'] == "UNVERIFIED") {
                 $responseLapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $lapak['_id'] . "/get")->collect();
-                $lapak['deskripsi_lapak'] = $responseLapak['data']['deskripsi_lapak'];
-                $lapak['alamat_lapak'] = $responseLapak['data']['alamat_lapak'];
-                $lapak['no_telepon_lapak'] = $responseLapak['data']['no_telepon_lapak'];
-                array_push($tmp_lapak_verify, $lapak);
+
+                array_push($tmp_lapak_verify, $responseLapak['data']);
             }
         }
 
@@ -34,7 +32,7 @@ class VerifikasiController extends Controller
         //return $response_detail_lapak;
         $updateLapak = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . $request->idLapak, [
             "nama_lapak" => $response_detail_lapak['data']['nama_lapak'],
-            "wilayah_id" => $response_detail_lapak['data']['wilayah_lapak']['wilayah_id'],
+            "paroki_id" => $response_detail_lapak['data']['paroki_lapak']['paroki_id'],
             "deskripsi_lapak" => $response_detail_lapak['data']['deskripsi_lapak'],
             "alamat_lapak" => $response_detail_lapak['data']['alamat_lapak'],
             "no_telepon_lapak" => $response_detail_lapak['data']['no_telepon_lapak'],
@@ -45,20 +43,18 @@ class VerifikasiController extends Controller
         return redirect()->route('daftar-lapak.detaillapak', Crypt::encryptString($request->idLapak));
     }
 
-    public function indexVerifikasiTransaksi()
+    public function indexVerifikasiRating()
     {
-        $transaksi = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/get')->collect();
-        
-        return view('admin/verifikasi_transaksi', ['dataTransaksi' => $transaksi]);
+        $rating = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/rating/get')->collect();
+        return view('admin/verifikasi_rating', ['dataRating' => $rating]);
     }
 
-    public function updateStatusTransaksi(Request $request)
+    public function updateStatusRating(Request $request)
     {
-        $updateLapak = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/update-status/' . $request->idTransaksi, [
-            "status" => $request->statusTransaksi,
+        $updateRating = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/rating/update/' . $request->idRating, [
+            "status_rating" => $request->statusRating,
         ]);
-        $transaksi = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/get')->collect();
 
-        return view('admin/verifikasi_transaksi', ['dataTransaksi' => $transaksi]);
+        return redirect()->route('verifikasi-rating.index');
     }
 }

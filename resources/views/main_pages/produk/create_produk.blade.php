@@ -32,25 +32,29 @@
                         <label for="namaProduk" class="col-sm-3 form-label text-end">*Nama Produk</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" name="namaProduk" id="namaProduk" placeholder="Masukkan Nama Produk" maxlength="100" autocomplete="off" oninput="checkTotalHuruf(this.value, 'nama_produk')">
+                                <input type="text" class="form-control wajib" name="nama_produk" id="namaProduk" placeholder="Masukkan Nama Produk" maxlength="100" autocomplete="off" value="{{old('nama_produk')}}" oninput="checkTotalHuruf(this.value, 'nama_produk')">
                                 <span class="input-group-text"><span id="totalNamaProduk">0</span>/100</span>
                             </div>
                             <div id="validateNamaProduk" class="form-text wajib-isi text-danger"></div>
-                            @error('namaProduk')
+                            @if ($errors->has('nama_produk'))
+                            @foreach ($errors->get('nama_produk') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
                     </div>
 
                     <div class="row mb-2">
                         <label for="deskripsiProduk" class="col-sm-3 form-label text-end">*Deskripsi Produk</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control deskripsi-produk wajib" name="deskripsiProduk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')"></textarea>
+                            <textarea class="form-control deskripsi-produk wajib" name="deskripsi_produk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')">{{old('deskripsi_produk')}}</textarea>
                             <div class="d-flex bd-highlight">
                                 <div id="validateDeskripsiProduk" class="me-auto bd-highlight form-text wajib-isi text-danger"></div>
-                                @error('deskripsiProduk')
-                                <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                                @enderror
+                                @if ($errors->has('deskripsi_produk'))
+                                @foreach ($errors->get('deskripsi_produk') as $message)
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @endforeach
+                                @endif
                                 <label class="bd-highlight form-label"><span id="totalDeskripsiProduk">0</span>/3000</span></label>
                             </div>
                         </div>
@@ -59,16 +63,18 @@
                     <div class="row mb-2">
                         <label for="kategoriProduk" class="col-sm-3 form-label text-end">*Kategori Produk</label>
                         <div class="col-sm-9">
-                            <select class="form-select wajib" name="kategoriProduk" id="kategoriProduk">
+                            <select class="form-select wajib" name="kategori_produk" id="kategoriProduk">
                                 <option value="" selected> -- Pilih Kategori -- </option>
                                 @foreach ($kategoris as $kategori)
                                 <option value="{{ $kategori['_id'] .'_'.$kategori['iconText'].'_'.$kategori['iconName'] }}">{{ $kategori['iconName']}} </option>
                                 @endforeach
                             </select>
                             <div id="validateKategoriLapak" class="form-text wajib-isi text-danger"></div>
-                            @error('kategoriProduk')
-                            <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @if ($errors->has('kategori_produk'))
+                            @foreach ($errors->get('kategori_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -86,12 +92,14 @@
                         <label for="merekProduk" class="col-sm-3 form-label text-end">Merek Produk</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="merekProduk" id="merekProduk" maxlength="50" autocomplete="off" oninput="checkTotalHuruf(this.value, 'merek_produk')">
+                                <input type="text" class="form-control" name="merek_produk" id="merekProduk" maxlength="50" autocomplete="off" value="{{old('merek_produk')}}" oninput="checkTotalHuruf(this.value, 'merek_produk')">
                                 <span class="input-group-text"><span id="totalMerekProduk">0</span>/50</span>
                             </div>
-                            @error('merekProduk')
-                            <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @if ($errors->has('merek_produk'))
+                            @foreach ($errors->get('merek_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -135,7 +143,7 @@
                                     <div class="position-relative col p-1 tampungGambar" style="width: 150px !important; height: 160px !important; align-items: center;" onmouseover="showIconDelete(0,'gambarProduk1')" onmouseout="hideIconDelete(0,'gambarProduk1')">
                                         <div class="d-flex align-items-center w-100 h-100 border border-dark iconTambah">
                                             <button class="btn w-100" type="button" onclick="$('#photo-add1').click()"><i class="mdi mdi-image-plus"></i></button>
-                                            <input type="file" accept="image/*" name="gambarProduk[]" id="photo-add1" class="d-none" onchange="tampilGambar(this,0,'gambarProduk1')">
+                                            <input type="file" accept="image/png, image/jpeg" name="gambarProduk[]" id="photo-add1" class="d-none" onchange="tampilGambar(this,0,'gambarProduk1')">
                                         </div>
                                         <div class="position-absolute d-flex align-items-center border border-dark iconDelete d-none" style="width: 142px; height: 152px;">
                                             <button type="button" class="btn w-100" onclick="deleteImage(0,'gambarProduk1','photo-add1')"><i class="mdi mdi-delete"></i></button>
@@ -146,7 +154,7 @@
                                     <div class="position-relative col p-1 tampungGambar" style="width: 150px !important; height: 160px !important; align-items: center;" onmouseover="showIconDelete(1,'gambarProduk2')" onmouseout="hideIconDelete(1,'gambarProduk2')">
                                         <div class="d-flex align-items-center w-100 h-100 border border-dark iconTambah">
                                             <button class="btn w-100" type="button" onclick="$('#photo-add2').click()"><i class="mdi mdi-image-plus"></i></button>
-                                            <input type="file" accept="image/*" name="gambarProduk[]" id="photo-add2" class="d-none" onchange="tampilGambar(this,1,'gambarProduk2')">
+                                            <input type="file" accept="image/png, image/jpeg" name="gambarProduk[]" id="photo-add2" class="d-none" onchange="tampilGambar(this,1,'gambarProduk2')">
                                         </div>
                                         <div class="position-absolute d-flex align-items-center border border-dark iconDelete d-none" style="width: 142px; height: 152px;">
                                             <button type="button" class="btn w-100" onclick="deleteImage(1,'gambarProduk2','photo-add2')"><i class="mdi mdi-delete"></i></button>
@@ -157,7 +165,7 @@
                                     <div class="position-relative col p-1 tampungGambar" style="width: 150px !important; height: 160px !important; align-items: center;" onmouseover="showIconDelete(2,'gambarProduk3')" onmouseout="hideIconDelete(2,'gambarProduk3')">
                                         <div class="d-flex align-items-center w-100 h-100 border border-dark iconTambah">
                                             <button class="btn w-100" type="button" onclick="$('#photo-add3').click()"><i class="mdi mdi-image-plus"></i></button>
-                                            <input type="file" accept="image/*" name="gambarProduk[]" id="photo-add3" class="d-none" onchange="tampilGambar(this,2,'gambarProduk3')">
+                                            <input type="file" accept="image/png, image/jpeg" name="gambarProduk[]" id="photo-add3" class="d-none" onchange="tampilGambar(this,2,'gambarProduk3')">
                                         </div>
                                         <div class="position-absolute d-flex align-items-center border border-dark iconDelete d-none" style="width: 142px; height: 152px;">
                                             <button type="button" class="btn w-100" onclick="deleteImage(2,'gambarProduk3','photo-add3')"><i class="mdi mdi-delete"></i></button>
@@ -166,7 +174,11 @@
                                 </div>
                             </div>
                             <div id="validateGambarProduk" class="me-auto bd-highlight form-text text-danger"></div>
-
+                            @if ($errors->has('gambar_produk'))
+                            @foreach ($errors->get('gambar_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                             <div>
                                 Minimal Mengisi Satu Gambar Produk
                             </div>
@@ -187,12 +199,14 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="text" class="form-control wajib" name="hargaProduk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" onkeypress="return cekKarakter(event)">
+                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" value="{{old('harga_produk')}}" onkeyup="cekKarakter(this.value, 'hargaProduk')" onpaste="return false;">
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
-                            @error('hargaProduk')
-                            <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @if ($errors->has('harga_produk'))
+                            @foreach ($errors->get('harga_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -200,12 +214,14 @@
                         <label for="stokProduk" class="col-sm-3 form-label text-end">*Stok Produk</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" name="stokProduk" id="stokProduk" autocomplete="off" onkeypress="return cekKarakter(event)">
+                                <input type="text" class="form-control wajib" name="stok_produk" id="stokProduk" autocomplete="off" value="{{old('stok_produk')}}" onkeyup="cekKarakter(this.value, 'stokProduk')" onpaste="return false;">
                             </div>
                             <div id="validateStokProduk" class="form-text wajib-isi text-danger"></div>
-                            @error('stokProduk')
-                            <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @if ($errors->has('stok_produk'))
+                            @foreach ($errors->get('stok_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -223,13 +239,15 @@
                         <label for="beratProduk" class="col-sm-3 form-label text-end">*Berat Produk</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" name="beratProduk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" onkeypress="return cekKarakter(event)">
+                                <input type="text" class="form-control wajib" name="berat_produk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" value="{{old('berat_produk')}}" onkeyup="cekKarakter(this.value,'beratProduk')" onpaste="return false;">
                                 <span class="input-group-text">gram</span>
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
-                            @error('beratProduk')
-                            <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @if ($errors->has('berat_produk'))
+                            @foreach ($errors->get('berat_produk') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
 
                     </div>
@@ -304,13 +322,24 @@
         }
     }
 
-    function cekKarakter(e) {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (charCode >= 48 && charCode <= 57) {
-            return true
+    function cekKarakter(value, nameInput) {
+        let data = value;
+        if (value[0] == 0) {
+            $('#' + nameInput).val(data.slice(0, 1));
+        } else {
+            if (isNaN(value[value.length - 1])) {
+                $('#' + nameInput).val(data.slice(0, value.length - 1));
+            }
         }
-        return false;
     }
+
+    // function cekKarakter(e) {
+    //     var charCode = (e.which) ? e.which : event.keyCode;
+    //     if (charCode >= 48 && charCode <= 57) {
+    //         return true
+    //     }
+    //     return false;
+    // }
 
     function showIconDelete(index, IdGambar) {
         if ($('.iconDelete').eq(index).hasClass('hover')) {

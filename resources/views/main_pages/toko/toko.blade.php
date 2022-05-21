@@ -1,8 +1,8 @@
 @extends('layouts/master')
-@section('info-halaman', 'Detail Lapak')
+@section('info-halaman', 'Informasi Lapakku')
 
 @section('content-CSS')
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 @endsection
 
 @section('content')
@@ -26,44 +26,50 @@
                         <label for="namaLapak" class="col-sm-3 form-label">*Nama Lapak</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" id="namaLapak" name="namaLapak" oninput="checkTotalHuruf(this.value, 'nama_lapak')" value="{{$lapak['data']['nama_lapak']}}">
+                                <input type="text" class="form-control wajib" id="namaLapak" name="nama_lapak" maxlength="100" oninput="checkTotalHuruf(this.value, 'nama_lapak')" value="{{$lapak['nama_lapak']}}">
                                 <span class="input-group-text"><span id="totalNamaLapak">0</span>/100</span>
                             </div>
                             <div class="form-text wajib-isi text-danger"></div>
-                            @error('namaLapak')
+                            @if ($errors->has('nama_lapak'))
+                            @foreach ($errors->get('nama_lapak') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <label for="wilayahLapak" class="col-sm-3 form-label">*Wilayah Lapak</label>
+                        <label for="parokiLapak" class="col-sm-3 form-label">*Paroki Lapak</label>
                         <div class="col-sm-9">
-                            <select class="form-select wajib" aria-label="Default select example" name="wilayahLapak" id="wilayahLapak">
-                                <option value="" selected>Pilih Wilayah</option>
-                                @foreach ($wilayahs as $wilayah)
-                                @if ($wilayah['_id'] === $lapak['data']['wilayah_lapak']['wilayah_id'])
-                                <option value="{{$wilayah['_id'] .'_'.$wilayah['nama_wilayah']}}" selected>{{$wilayah['nama_wilayah']}}</option>
+                            <select class="form-select wajib" aria-label="Default select example" name="paroki_lapak" id="parokiLapak">
+                                <option value="" selected>Pilih Paroki</option>
+                                @foreach ($parokis as $paroki)
+                                @if ($paroki['_id'] === $lapak['paroki_lapak']['paroki_id'])
+                                <option value="{{$paroki['_id'] .'_'.$paroki['nama_paroki']}}" selected>Paroki {{$paroki['nama_paroki']}}</option>
                                 @else
-                                <option value="{{$wilayah['_id'] .'_'.$wilayah['nama_wilayah']}}">{{$wilayah['nama_wilayah']}}</option>
+                                <option value="{{$paroki['_id'] .'_'.$paroki['nama_paroki']}}">Paroki {{$paroki['nama_paroki']}}</option>
                                 @endif
                                 @endforeach
                             </select>
                             <div class="form-text wajib-isi text-danger"></div>
-                            @error('wilayahLapak')
+                            @if ($errors->has('paroki_lapak'))
+                            @foreach ($errors->get('paroki_lapak') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
 
                     </div>
                     <div class="row mb-2">
                         <label for="deskripsiLapak" class="col-sm-3 form-label">*Deskripsi Lapak</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control wajib" name="deskripsiLapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')">{{$lapak['data']['deskripsi_lapak']}}</textarea>
+                            <textarea class="form-control wajib" name="deskripsi_lapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')">{{$lapak['deskripsi_lapak']}}</textarea>
                             <div class="d-flex bd-highlight">
                                 <div id="validateDeskripsiLapak" class="me-auto bd-highlight form-text wajib-isi text-danger"></div>
-                                @error('deskripsiLapak')
-                                <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                                @enderror
+                                @if ($errors->has('deskripsi_lapak'))
+                                @foreach ($errors->get('deskripsi_lapak') as $message)
+                                <div class="form-text text-danger">{{ $message }}</div>
+                                @endforeach
+                                @endif
                                 <label class="bd-highlight form-label"><span id="totalDeskripsiLapak">0</span>/3000</span></label>
                             </div>
                         </div>
@@ -71,13 +77,16 @@
                     <div class="row">
                         <label for="noHandphoneLapak" class="col-sm-3 form-label">*Nomor WhatsApp</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="noHandphoneLapak" value="{{$lapak['data']['no_telepon_lapak']}}" onkeypress="return cekKarakter(event)">
-                            <div class="d-flex bd-highlight">
-                                <div id="validatenoHandphoneLapak" class="me-auto bd-highlight form-text wajib-isi text-danger"></div>
-                                @error('noHandphoneLapak')
-                                <div class="me-auto bd-highlight form-text text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">+62</span>
+                                <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{$lapak['no_telepon_lapak']}}" onkeyup="cekKarakterWhatsapp(this.value)" onpaste="return false;">
                             </div>
+                            <div id="validatenoHandphoneLapak" class="form-text wajib-isi text-danger"></div>
+                            @if ($errors->has('no_telepon_lapak'))
+                            @foreach ($errors->get('no_telepon_lapak') as $message)
+                            <div class="form-text text-danger">{{ $message }}</div>
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -102,9 +111,11 @@
                                 <option value="" selected>-- Pilih Kecamatan --</option>
                             </select>
                             <div class="form-text wajib-isi text-danger"></div>
-                            @error('kecamatan')
+                            @if ($errors->has('kecamatan'))
+                            @foreach ($errors->get('kecamatan') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -114,20 +125,24 @@
                                 <option value="" selected>-- Pilih Kelurahan --</option>
                             </select>
                             <div class="form-text wajib-isi text-danger"></div>
-                            @error('kelurahan')
+                            @if ($errors->has('kelurahan'))
+                            @foreach ($errors->get('kelurahan') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
 
                     </div>
                     <div class="row mb-2">
                         <label for="detailAlamat" class="col-sm-3 form-label">*Detail Alamat</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{$lapak['data']['alamat_lapak']['detail_alamat']}}">
+                            <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{$lapak['alamat_lapak']['detail_alamat']}}">
                             <div class="form-text wajib-isi text-danger"></div>
-                            @error('detailAlamat')
+                            @if ($errors->has('detailAlamat'))
+                            @foreach ($errors->get('detailAlamat') as $message)
                             <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                            @endforeach
+                            @endif
                         </div>
 
 
@@ -175,12 +190,17 @@
         }
     }
 
-    function cekKarakter(e) {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (charCode >= 48 && charCode <= 57) {
-            return true
+    function cekKarakterWhatsapp(value, e) {
+        let noHandphone = value;
+        if (value.length == 1 && value[0] == 0) {
+            $('#noHandphoneLapak').val('');
+        } else if (value[0] == 0) {
+            $('#noHandphoneLapak').val(noHandphone.slice(1));
+        } else {
+            if (isNaN(value[value.length - 1])) {
+                $('#noHandphoneLapak').val(noHandphone.slice(0, value.length - 1));
+            }
         }
-        return false;
     }
 
     function resetLokasi() {
@@ -213,7 +233,7 @@
             $.ajax({
                 url: "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=" + kecamatan,
                 success: function(kelurahan) {
-                    $kelurahanDb = <?php echo json_encode($lapak['data']['alamat_lapak']['kelurahan']) ?>;
+                    $kelurahanDb = <?php echo json_encode($lapak['alamat_lapak']['kelurahan']) ?>;
                     $.each(kelurahan.kelurahan, function(index, data) {
                         if ($kelurahanDb == data.nama) {
                             $('#kelurahan').append('<option value="' + data.id + '_' + data.nama + '" selected>' + data.nama + '</option>');
@@ -267,7 +287,7 @@
         $.ajax({
             url: "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=3310",
             success: function(kecamatan) {
-                $kecamatanDb = <?php echo json_encode($lapak['data']['alamat_lapak']['kecamatan']) ?>;
+                $kecamatanDb = <?php echo json_encode($lapak['alamat_lapak']['kecamatan']) ?>;
                 $.each(kecamatan.kecamatan, function(index, data) {
                     if ($kecamatanDb == data.nama) {
                         $('#kecamatan').append('<option value="' + data.id + '_' + data.nama + '" selected>' + data.nama + '</option>');
@@ -289,8 +309,8 @@
         });
 
 
-        let latitudeDb = <?php echo json_encode($lapak['data']['alamat_lapak']['latitude']) ?>;
-        let longitudeDb = <?php echo json_encode($lapak['data']['alamat_lapak']['longitude']) ?>;
+        let latitudeDb = <?php echo json_encode($lapak['alamat_lapak']['latitude']) ?>;
+        let longitudeDb = <?php echo json_encode($lapak['alamat_lapak']['longitude']) ?>;
 
         var mymap = L.map('mapid').setView([-7.7012443035017455, 110.59937404767979], 13);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYWx2cmlhbGRvIiwiYSI6ImNrczhxdmF2ejA5bm8yeHFwcGhuN3N5b3AifQ.PhSSLBopyWGM0y2nsDDbOg', {

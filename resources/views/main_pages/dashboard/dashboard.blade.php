@@ -42,7 +42,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="fw-bold text-uppercase mb-1">Rating Lapak</div>
-                                    <div class="h5 mb-0 fw-bold">2</div>
+                                    <div class="h5 mb-0 fw-bold">{{ round($lapak['data']['rating_lapak']) }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="mdi mdi-star-circle text-white"></i>
@@ -59,38 +59,43 @@
                         <div class="card-header card-color-dashboard">
                             Produk Terlaris
                         </div>
-                        <div class="card-body">
+                        <div class="card-body overflow-auto mb-2">
                             @if (count($produk) == 0)
-                                <div class="container-fluid d-flex justify-content-center align-items-center h-100 fw-bold">
-                                    Belum ada Produk Terjual
-                                </div>
+                            <div class="container-fluid d-flex justify-content-center align-items-center h-100 fw-bold">
+                                Belum ada Produk Terjual
+                            </div>
                             @else
-                                @foreach ( $produk as $p )
-                                    <ul class="list-group list-group-flush p-0">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center border-bottom">
-                                            {{ $p['nama_produk'] }}
-                                            <span class="badge bg-primary rounded-pill">{{ $p['penjualan_produk'] }}</span>
-                                        </li>
-                                    </ul>
-                                @endforeach
+                            @foreach ( $produk as $p )
+                            @if ($p['penjualan_produk'] > 0)
+                            <ul class="list-group list-group-flush p-0">
+                                <li class="list-group-item d-flex justify-content-between align-items-center border-bottom">
+                                    {{ $p['nama_produk'] }}
+                                    <span class="badge bg-primary rounded-pill">{{ $p['penjualan_produk'] }}</span>
+                                </li>
+                            </ul>
                             @endif
-                            
+                            @endforeach
+                            @endif
+
                         </div>
                     </div>
                 </div>
 
                 <div class="col-xl-7 col-lg-12 col-md-12" style="max-height: 600px;">
-
                     <div class="card" style="height: 95.6%;">
                         <div class="card-header card-color-dashboard">
-                            Catatan Admin
+                            Catatan
                         </div>
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                Status Lapak
-                                <span class="badge bg-primary rounded-pill">{{$lapak['data']['status_lapak']}}</span>
+                            <div class="d-flex mb-2">
+                                <span class="w-25">Status Lapak</span>
+                                <span class="badge bg-primary rounded-pill flex-grow-1">{{$lapak['data']['status_lapak']}}</span>
                             </div>
-                            <textarea class="border border-1 rounded-1 w-100 p-2" style="height: 80%; resize: none;" disabled>{{$lapak['data']['catatan_lapak']}}</textarea>
+                            <div class="d-flex mb-2 h-100">
+                                <span class="w-25">Catatan Admin</span>
+                                <textarea class="border border-1 rounded-1 mb-5 flex-grow-1" style="height: 80%; resize: none;" disabled>{{$lapak['data']['catatan_lapak']}}</textarea>
+                            </div>
+                            
                         </div>
                     </div>
 

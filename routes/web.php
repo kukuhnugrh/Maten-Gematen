@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/clean', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    Log::info("Cache - Route - Config - View Clear");
+});
 
 //LOGIN
 Route::get('/login', ['as' => 'login.web', 'uses' => 'SignPage\LoginController@index']);
@@ -69,9 +79,9 @@ Route::middleware(['auth.login.information'])->group(function () {
             Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusLapak']);
         });
 
-        Route::group(['prefix' => 'admin/verifikasiTransaksi', 'as' => 'verifikasi-transaksi.'], function () {
-            Route::get('/', ['as' => 'index', 'uses' => 'Admin\Verifikasi\VerifikasiController@indexVerifikasiTransaksi']);
-            Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusTransaksi']);
+        Route::group(['prefix' => 'admin/verifikasiRating', 'as' => 'verifikasi-rating.'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'Admin\Verifikasi\VerifikasiController@indexVerifikasiRating']);
+            Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusRating']);
         });
     });
 });

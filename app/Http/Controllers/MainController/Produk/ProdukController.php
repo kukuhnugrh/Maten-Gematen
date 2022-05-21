@@ -24,7 +24,7 @@ class ProdukController extends Controller
             array_push($produkArray, $produk);
         }
 
-        return view("main_pages/produk/produk", ['response_produk' => $produkArray]);
+        return view("main_pages/produk/produk", ['response_produk' => $produkArray, 'status_lapak' => $responseDetailLapak['data']['status_lapak']]);
     }
 
     public function viewCreateProduk()
@@ -36,24 +36,19 @@ class ProdukController extends Controller
 
     public function createProduk(Request $request)
     {
-        /*
-        ---------------------------------------------------------------------------
-        Validasi Request
 
+        //Validasi Request
         $validated = $request->validate([
-            'namaProduk' => 'required|max:100',
-            'deskripsiProduk' => 'required|max:3000',
-            'kategoriProduk' => 'required',
-            'hargaProduk' => 'required|numeric',
-            'stokProduk' => 'required|numeric',
-            'beratProduk' => 'required|numeric',
-            'merekProduk' => 'max:50'
+            'kategori_produk' => 'required',
+            'nama_produk' => 'required',
+            'deskripsi_produk' => 'required',
+            'berat_produk' => 'required|numeric|min:1',
+            'harga_produk' => 'required|numeric|min:1',
+            'stok_produk' => 'required|numeric|min:1'
         ]);
-        ---------------------------------------------------------------------------
-        */
 
         if ($request->hasfile('gambarProduk')) {
-            $kategori = explode('_', $request->kategoriProduk);
+            $kategori = explode('_', $request->kategori_produk);
 
             $data = [
                 [
@@ -66,23 +61,23 @@ class ProdukController extends Controller
                 ],
                 [
                     'name'     => 'nama_produk',
-                    'contents' => $request->namaProduk
+                    'contents' => $request->nama_produk
                 ],
                 [
                     'name'     => 'deskripsi_produk',
-                    'contents' => $request->deskripsiProduk
+                    'contents' => $request->deskripsi_produk
                 ],
                 [
                     'name'     => 'berat_produk',
-                    'contents' => (int) $request->beratProduk
+                    'contents' => (int) $request->berat_produk
                 ],
                 [
                     'name'     => 'harga_produk',
-                    'contents' => (int) $request->hargaProduk
+                    'contents' => (int) $request->harga_produk
                 ],
                 [
                     'name'     => 'stok_produk',
-                    'contents' => (int) $request->stokProduk
+                    'contents' => (int) $request->stok_produk
                 ],
                 [
                     'name'     => 'kondisi_produk',
@@ -94,28 +89,36 @@ class ProdukController extends Controller
                 ],
                 [
                     'name'     => 'merek_produk',
-                    'contents' => $request->merekProduk
+                    'contents' => $request->merek_produk
                 ],
                 [
                     'name'     => 'variasi_produk[]',
-                    'contents' => $this->variasiProduk($request)
+                    'contents' => json_encode($this->variasiProduk($request))
                 ]
             ];
 
             $body_request = $this->setGambarProduk($request->file('gambarProduk'), $data);
 
-            $response = $this->getClientHttp()->request('POST', '/api/produk/create', [
-                'headers' => [
-                    'Authorization' => "Bearer" . session('_jwtToken')
-                ],
-                'multipart' => $body_request
-            ]);
+            try {
+                $response = $this->getClientHttp()->request('POST', '/api/produk/create', [
+                    'headers' => [
+                        'Authorization' => "Bearer" . session('_jwtToken')
+                    ],
+                    'multipart' => $body_request
+                ]);
 
-            $storeData = json_decode($response->getBody()->getContents(), true);
+                $storeData = json_decode($response->getBody()->getContents(), true);
 
-            return redirect()->route('produkku.viewUpdateProduk', Crypt::encryptString($storeData['data']['_id']))->with('status_createUpdate_produk', $storeData['message']);
+                return redirect()->route('produkku.viewUpdateProduk', Crypt::encryptString($storeData['data']['_id']))->with('status_createUpdate_produk', $storeData['message']);
+            } catch (ClientException $e) {
+                $bodyError = Psr7\Message::parseMessage(Psr7\Message::toString($e->getResponse()))['body'];
+
+                $message = json_decode($bodyError);
+
+                return back()->withErrors($message->message)->withInput();
+            }
         } else {
-            return back()->with('status_gambar', 'Gambar harus Diiisi');
+            return back()->withErrors(['gambar_produk' => ['Gambar Produk Harus Diisi']])->withInput();
         }
     }
 
@@ -139,9 +142,18 @@ class ProdukController extends Controller
 
     public function updateProduk(Request $request)
     {
-        // dd($request);
+        //Validasi Request
+        $validated = $request->validate([
+            'kategori_produk' => 'required',
+            'nama_produk' => 'required',
+            'deskripsi_produk' => 'required',
+            'berat_produk' => 'required|numeric|min:1',
+            'harga_produk' => 'required|numeric|min:1',
+            'stok_produk' => 'required|numeric|min:1'
+        ]);
+
         $_id = Crypt::decryptString($request->id_produk);
-        $kategori = explode('_', $request->kategoriProduk);
+        $kategori = explode('_', $request->kategori_produk);
 
         $data = [
             [
@@ -150,23 +162,23 @@ class ProdukController extends Controller
             ],
             [
                 'name'     => 'nama_produk',
-                'contents' => $request->namaProduk
+                'contents' => $request->nama_produk
             ],
             [
                 'name'     => 'deskripsi_produk',
-                'contents' => $request->deskripsiProduk
+                'contents' => $request->deskripsi_produk
             ],
             [
                 'name'     => 'berat_produk',
-                'contents' => (int) $request->beratProduk
+                'contents' => (int) $request->berat_produk
             ],
             [
                 'name'     => 'harga_produk',
-                'contents' => (int) $request->hargaProduk
+                'contents' => (int) $request->harga_produk
             ],
             [
                 'name'     => 'stok_produk',
-                'contents' => (int) $request->stokProduk
+                'contents' => (int) $request->stok_produk
             ],
             [
                 'name'     => 'kondisi_produk',
@@ -178,11 +190,11 @@ class ProdukController extends Controller
             ],
             [
                 'name'     => 'merek_produk',
-                'contents' => $request->merekProduk
+                'contents' => $request->merek_produk
             ],
             [
                 'name'     => 'variasi_produk[]',
-                'contents' => $this->variasiProduk($request)
+                'contents' => json_encode($this->variasiProduk($request))
             ]
         ];
 
@@ -199,16 +211,17 @@ class ProdukController extends Controller
                 ],
                 'multipart' => $body_request
             ]);
+
+            $storeData = json_decode($response->getBody()->getContents(), true);
+
+            return redirect()->route('produkku.viewUpdateProduk', Crypt::encryptString($_id))->with('status_createUpdate_produk', $storeData['message']);
         } catch (ClientException $e) {
-            echo Psr7\Message::toString($e->getRequest());
-            echo Psr7\Message::toString($e->getResponse());
+            $bodyError = Psr7\Message::parseMessage(Psr7\Message::toString($e->getResponse()))['body'];
+
+            $message = json_decode($bodyError);
+
+            return back()->withErrors($message->message)->withInput();
         }
-
-
-
-        $storeData = json_decode($response->getBody()->getContents(), true);
-
-        return redirect()->route('produkku.viewUpdateProduk', Crypt::encryptString($_id))->with('status_createUpdate_produk', $storeData['message']);
     }
 
     protected function variasiProduk($request)
@@ -245,11 +258,11 @@ class ProdukController extends Controller
     protected function setGambarProduk($gambarproduk, $body_request)
     {
         $tmp_data = $body_request;
-        for ($i = 0; $i < count($gambarproduk); $i++) {
+        foreach ($gambarproduk as $gmbrprdk) {
             $datagambar = array(
                 "name" => "gambar_produk[]",
-                "contents" => file_get_contents($gambarproduk[$i]),
-                "filename" => $gambarproduk[$i]->getClientOriginalName()
+                "contents" => file_get_contents($gmbrprdk),
+                "filename" => $gmbrprdk->getClientOriginalName()
             );
 
             array_push($tmp_data, $datagambar);

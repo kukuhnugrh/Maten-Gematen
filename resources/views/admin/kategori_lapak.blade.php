@@ -21,7 +21,8 @@
                 <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-kategori" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th scope="col" width="80%">Nama Kategori</th>
+                            <th scope="col" width="10%">Ikon</th>
+                            <th scope="col" width="70%">Nama Kategori</th>
                             <th scope="col" width="20%" class="center-item w-100">Action</th>
                         </tr>
                     </thead>
@@ -38,8 +39,6 @@
 <div class="modal fade" id="tambah-edit-kategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
-            <!-- <form action="{{route('kategori-produk.createUpdateKategori')}}" method="POST" class="form-horizontal"> -->
-
             <div class="modal-content">
                 <div class="modal-header card-color-dashboard">
                     <h5 class="modal-title" id="modal-judul">Tambah Kategori</h5>
@@ -51,7 +50,10 @@
                             <input type="hidden" class="form-control" name="idKategori" id="idKategori">
                             <div class="form-group">
                                 <label for="namaKategori">Nama Kategori</label>
-                                <input type="text" class="form-control" name="namaKategori" id="namaKategori">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="namaKategori" id="namaKategori" maxlength="15" autocomplete="off" oninput="checkTotalHuruf(this.value, 'kategori_produk')">
+                                    <span class="input-group-text"><span id="totalKategoriProduk">0</span>/15</span>
+                                </div>
                                 <div class="alert-message text-danger" id="namaKategoriError"></div>
                             </div>
                             <div class="form-group">
@@ -60,7 +62,7 @@
                                 <div class="alert-message text-danger" id="iconKategoriError"></div>
                             </div>
                             <div>
-                                <p class="d-flex justify-content-end" style="font-size: 0.875em;">Tampat mencari icon : <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a></p>
+                                <p class="d-flex justify-content-end" style="font-size: 0.875em;">Tempat mencari icon : <a href="https://materialdesignicons.com/" target="_blank">Material Design Icons</a></p>
 
                             </div>
                         </div>
@@ -102,7 +104,15 @@
                                 </tr>
                                 <tr style="border-bottom: 1px solid #dcdde1;">
                                     <td class="text-center">2.</td>
-                                    <td>Cari Icon Yang Diinginkan Dengan Menginputkan Nama Icon Pada Kolom Search <img width="50%" src="{{ asset('assets/img/Halaman_utama_MDI.png') }}"></td>
+                                    <td>Cari Icon Yang Diinginkan Dengan Menginputkan Nama Icon Pada Kolom Search <a href="https://mande.paroki-gmaklaten.web.id/assets/img/Halaman_utama_MDI.png" target="_blank"><img width="50%" src="{{ asset('assets/img/Halaman_utama_MDI.png') }}"></a></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #dcdde1;">
+                                    <td class="text-center">3.</td>
+                                    <td>Pilih Ikon Yang Sesuai Dengan Yang Diinginkan <a href="https://mande.paroki-gmaklaten.web.id/assets/img/Pilih_Ikon_Sesuai.png" target="_blank"><img width="50%" src="{{ asset('assets/img/Halaman_utama_MDI.png') }}"></a></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #dcdde1;">
+                                    <td class="text-center">4.</td>
+                                    <td>Salin Nama Ikon Dan Tempelkan Pada Nama Ikon Kategori<a href="https://mande.paroki-gmaklaten.web.id/assets/img/Salin_dan_Tempelkan.png" target="_blank"><img width="50%" src="{{ asset('assets/img/Halaman_utama_MDI.png') }}"></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -124,12 +134,19 @@
     function listKategori(kategori) {
         let dataKategori = kategori["_id"] + '_' + kategori["iconText"] + '_' + kategori["iconName"];
         let data = '<tr style="border-bottom: 1px solid #dcdde1;">' +
+            '<td><i class="mdi mdi-' + kategori["iconText"] + '"></i></td>' +
             '<td>' + kategori["iconName"] + '</td>' +
             '<td>' +
             '<button type="button" id="edit-kategori" data-bs-toggle="modal" data-id="' + dataKategori + '" data-bs-target="#tambah-edit-kategori" class="btn btn-outline-success actionKategori center-item w-100">Edit</button>' +
             '</td>' +
             '</tr>';
         return data;
+    }
+
+    function checkTotalHuruf(value, jnsInput) {
+        let total = value.length;
+        $("#totalKategoriProduk").text(total);
+
     }
 
     $(document).ready(function() {
@@ -145,8 +162,11 @@
         });
 
         $("#tambah-kategori").click(function() {
-            $('.alert').css('display', 'none')
-            $('#form-tambah-edit').trigger("reset"); //mereset semua input dll didalamnya
+            $("#totalKategoriProduk").text(0);
+            $('.alert').css('display', 'none');
+            $('#idKategori').val('');
+            $('#iconKategori').val('');
+            $('#namaKategori').val('');
             $('#modal-judul').html("Tambah Kategori"); //valuenya tambah pegawai baru
             $('#namaKategoriError').text('');
             $('#iconKategoriError').text('');
@@ -163,7 +183,9 @@
             let data = $(this).data('id').split("_");
 
             $('.alert').css('display', 'none');
-            $('#form-tambah-edit').trigger("reset"); //mereset semua input dll didalamnya
+            $('#idKategori').val('');
+            $('#iconKategori').val('');
+            $('#namaKategori').val('');
             $('#modal-judul').html("Edit Kategori");
             $('#namaKategoriError').text('');
             $('#iconKategoriError').text('');
@@ -172,6 +194,8 @@
             $('#idKategori').val(data[0]);
             $('#iconKategori').val(data[1]);
             $('#namaKategori').val(data[2]);
+
+            $("#totalKategoriProduk").text($('#namaKategori').val().length);
         });
 
         $("#tombol-simpan").click(function(e) {
@@ -208,7 +232,6 @@
 
                 },
                 error: function(data) {
-
                     $('.alert').css('display', 'none')
                     $("#tombol-simpan").prop("disabled", false);
                     $("#tombol-cancel").prop("disabled", false);

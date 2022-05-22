@@ -20,6 +20,7 @@ Route::get('/clean', function() {
     Artisan::call('route:clear');
     Artisan::call('config:clear');
     Artisan::call('view:clear');
+    Session::flush();
     Log::info("Cache - Route - Config - View Clear");
 });
 

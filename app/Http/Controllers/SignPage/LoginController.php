@@ -67,7 +67,7 @@ class LoginController extends Controller
     {
         # code...
         $request->session()->flush();
-        $logout = Http::post('http://ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
+        $logout = Http::post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
         return redirect()->route('login.web');
     }
 

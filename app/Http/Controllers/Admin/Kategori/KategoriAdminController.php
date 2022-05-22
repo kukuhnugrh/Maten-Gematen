@@ -11,7 +11,7 @@ class KategoriAdminController extends Controller
     //
     public function index()
     {
-        $kategori = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get')->collect();
+        $kategori = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get')->collect();
         //return $kategori;
         return view('admin/kategori_lapak', ['kategoriProduk' => $kategori['data']]);
     }
@@ -19,7 +19,7 @@ class KategoriAdminController extends Controller
     public function createOrUpdate(Request $request)
     {
         if (empty($request->idKategori)) {
-            $responseKategori = Http::withToken(session('_jwtToken'))->accept('application/json')->post('http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/create', [
+            $responseKategori = Http::withToken(session('_jwtToken'))->accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/create', [
                 "iconName" => $request->namaKategori,
                 "iconText" => $request->iconKategori
             ]);
@@ -31,7 +31,7 @@ class KategoriAdminController extends Controller
                 return $kategori;
             }
         } else {
-            $responseKategori = Http::withToken(session('_jwtToken'))->accept('application/json')->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/update/' . $request->idKategori, [
+            $responseKategori = Http::withToken(session('_jwtToken'))->accept('application/json')->put('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/update/' . $request->idKategori, [
                 "iconName" => $request->namaKategori,
                 "iconText" => $request->iconKategori
             ]);
@@ -47,7 +47,7 @@ class KategoriAdminController extends Controller
 
     public function getKategori()
     {
-        $kategori = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get')->collect();
+        $kategori = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get')->collect();
         return response()->json($kategori['data']);
     }
 }

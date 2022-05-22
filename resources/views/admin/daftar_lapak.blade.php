@@ -1,5 +1,5 @@
 @extends('admin/layout_admin')
-@section('info-halaman', 'List Lapak')
+@section('info-halaman', 'Daftar Lapak')
 
 @section('content')
 <div id="main-content" class="d-flex flex-column">

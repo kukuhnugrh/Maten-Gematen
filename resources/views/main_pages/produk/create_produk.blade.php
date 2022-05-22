@@ -1,15 +1,6 @@
 @extends('layouts/master')
 @section('info-halaman', 'Tambah Produk')
 
-@section('content-CSS')
-<style>
-    .deskripsi-produk {
-        height: 250px;
-        resize: none;
-    }
-</style>
-@endsection
-
 @section('content')
 <div id="main-content" class="d-flex flex-column">
     @if (session('status_gambar'))
@@ -21,7 +12,6 @@
     <form action="{{route('produkku.createProduk')}}" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card mb-3">
-
             <div class="card-header card-color-dashboard">
                 Informasi Produk
             </div>
@@ -29,7 +19,7 @@
                 <div class="col-11">
 
                     <div class="row mb-2">
-                        <label for="namaProduk" class="col-sm-3 form-label text-end">*Nama Produk</label>
+                        <label for="namaProduk" class="col-sm-3 form-label text-end">Nama Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="nama_produk" id="namaProduk" placeholder="Masukkan Nama Produk" maxlength="100" autocomplete="off" value="{{old('nama_produk')}}" oninput="checkTotalHuruf(this.value, 'nama_produk')">
@@ -45,9 +35,9 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="deskripsiProduk" class="col-sm-3 form-label text-end">*Deskripsi Produk</label>
+                        <label for="deskripsiProduk" class="col-sm-3 form-label text-end">Deskripsi Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
-                            <textarea class="form-control deskripsi-produk wajib" name="deskripsi_produk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')">{{old('deskripsi_produk')}}</textarea>
+                            <textarea class="form-control deskripsi-produk wajib" name="deskripsi_produk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')" style="height: 250px; resize: none;">{{old('deskripsi_produk')}}</textarea>
                             <div class="d-flex bd-highlight">
                                 <div id="validateDeskripsiProduk" class="me-auto bd-highlight form-text wajib-isi text-danger"></div>
                                 @if ($errors->has('deskripsi_produk'))
@@ -61,7 +51,7 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="kategoriProduk" class="col-sm-3 form-label text-end">*Kategori Produk</label>
+                        <label for="kategoriProduk" class="col-sm-3 form-label text-end">Kategori Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <select class="form-select wajib" name="kategori_produk" id="kategoriProduk">
                                 <option value="" selected> -- Pilih Kategori -- </option>
@@ -117,7 +107,7 @@
                         <label class="col-sm-3 form-label text-end">Variasi Produk</label>
                         <div class="col-sm-9">
                             <div class="d-grid gap-2 mb-1">
-                                <button class="btn btn-secondary" type="button" id="btnTambahVariasi">Tambah Variasi</button>
+                                <button class="btn btn-primary" type="button" id="btnTambahVariasi">Tambah Variasi</button>
                             </div>
                             <div id="variasi"></div>
                             <div id="total_variasi"></div>
@@ -134,9 +124,8 @@
             </div>
             <div class="card-body">
                 <div class="col-11">
-
                     <div class="row mb-2">
-                        <label for="inputGambarProduk" class="col-sm-3 form-label text-end">*Gambar Produk</label>
+                        <label for="inputGambarProduk" class="col-sm-3 form-label text-end">Gambar Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <div class="row row-cols-3" id="tampung-gambar">
@@ -179,8 +168,8 @@
                             <div class="form-text text-danger">{{ $message }}</div>
                             @endforeach
                             @endif
-                            <div>
-                                Minimal Mengisi Satu Gambar Produk
+                            <div class="text-danger">
+                                *Minimal Mengisi Satu Gambar Produk
                             </div>
                         </div>
                     </div>
@@ -195,11 +184,11 @@
             <div class="card-body">
                 <div class="col-11">
                     <div class="row mb-2">
-                        <label for="hargaProduk" class="col-sm-3 form-label text-end">*Harga Produk</label>
+                        <label for="hargaProduk" class="col-sm-3 form-label text-end">Harga Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" value="{{old('harga_produk')}}" onkeyup="cekKarakter(this.value, 'hargaProduk')" onpaste="return false;">
+                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" value="{{old('harga_produk')}}" onkeyup="cekKarakter()" onpaste="return false;">
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
                             @if ($errors->has('harga_produk'))
@@ -211,7 +200,7 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="stokProduk" class="col-sm-3 form-label text-end">*Stok Produk</label>
+                        <label for="stokProduk" class="col-sm-3 form-label text-end">Stok Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="stok_produk" id="stokProduk" autocomplete="off" value="{{old('stok_produk')}}" onkeyup="cekKarakter(this.value, 'stokProduk')" onpaste="return false;">
@@ -236,7 +225,7 @@
             <div class="card-body">
                 <div class="col-11">
                     <div class="row mb-2">
-                        <label for="beratProduk" class="col-sm-3 form-label text-end">*Berat Produk</label>
+                        <label for="beratProduk" class="col-sm-3 form-label text-end">Berat Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="berat_produk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" value="{{old('berat_produk')}}" onkeyup="cekKarakter(this.value,'beratProduk')" onpaste="return false;">
@@ -257,7 +246,7 @@
         </div>
 
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit" id="btnSimpanProduk" style="background-color: #DD413F; border-color: #DD413F;">Simpan Produk</button>
+            <button class="btn" type="submit" id="btnSimpanProduk" style="background-color: #A13333; color: white;">Simpan Produk</button>
         </div>
     </form>
 
@@ -322,24 +311,24 @@
         }
     }
 
-    function cekKarakter(value, nameInput) {
-        let data = value;
-        if (value[0] == 0) {
-            $('#' + nameInput).val(data.slice(0, 1));
-        } else {
-            if (isNaN(value[value.length - 1])) {
-                $('#' + nameInput).val(data.slice(0, value.length - 1));
-            }
+    function cekKarakter() {
+        let data = $('#hargaProduk').val();
+        data = data.replace(/[.,]/, "");
+        if(data[0] == 0){
+            $('#hargaProduk').val(data.substr(1, data.length));
+        }else{
+            let regex = /[a-zA-Z]/g;
+            $('#hargaProduk').val(data.replace(regex, ""));
         }
+        formatCurrency();
     }
 
-    // function cekKarakter(e) {
-    //     var charCode = (e.which) ? e.which : event.keyCode;
-    //     if (charCode >= 48 && charCode <= 57) {
-    //         return true
-    //     }
-    //     return false;
-    // }
+    function formatCurrency() {
+        let data = $('#hargaProduk').val();
+        data = data.replace(/[.,]/, "");
+        console.log(data);
+        $('#hargaProduk').val(Intl.NumberFormat('en-US').format(data));
+    }
 
     function showIconDelete(index, IdGambar) {
         if ($('.iconDelete').eq(index).hasClass('hover')) {
@@ -387,8 +376,7 @@
     }
 
     $(document).ready(function() {
-
-
+        formatCurrency();
         $('#btnTambahVariasi').on('click', function(e) {
             counter++;
             var txt1 = "<div id='variasi_" + counter + "'>" +
@@ -399,7 +387,7 @@
                 "</div>" +
 
                 "<div class='mb-2'>" +
-                "<label for='inputVariasiSize' class='form-label'>Size</label>" +
+                "<label for='inputVariasiSize' class='form-label'>Ukuran</label>" +
                 "<div class = 'input-group' >" +
                 "<input type='text' class='form-control' name='inputVariasiSize[]' id='inputVariasiSize_" + counter + "'>" +
                 "</div>" +

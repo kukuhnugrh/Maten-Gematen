@@ -12,12 +12,12 @@ class VerifikasiController extends Controller
     //
     public function indexVerifikasiLapak()
     {
-        $dataLapak = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get')->collect();
+        $dataLapak = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get')->collect();
         $tmp_lapak_verify = array();
 
         foreach ($dataLapak['data'] as $lapak) {
             if ($lapak['status_lapak'] == "UNVERIFIED") {
-                $responseLapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $lapak['_id'] . "/get")->collect();
+                $responseLapak = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $lapak['_id'] . "/get")->collect();
 
                 array_push($tmp_lapak_verify, $responseLapak['data']);
             }
@@ -28,9 +28,9 @@ class VerifikasiController extends Controller
 
     public function updateStatusLapak(Request $request)
     {
-        $response_detail_lapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $request->idLapak . "/get")->collect();
+        $response_detail_lapak = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $request->idLapak . "/get")->collect();
         //return $response_detail_lapak;
-        $updateLapak = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . $request->idLapak, [
+        $updateLapak = Http::withToken(session('_jwtToken'))->put('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . $request->idLapak, [
             "nama_lapak" => $response_detail_lapak['data']['nama_lapak'],
             "paroki_id" => $response_detail_lapak['data']['paroki_lapak']['paroki_id'],
             "deskripsi_lapak" => $response_detail_lapak['data']['deskripsi_lapak'],
@@ -45,13 +45,13 @@ class VerifikasiController extends Controller
 
     public function indexVerifikasiRating()
     {
-        $rating = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/rating/get')->collect();
+        $rating = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/rating/get')->collect();
         return view('admin/verifikasi_rating', ['dataRating' => $rating]);
     }
 
     public function updateStatusRating(Request $request)
     {
-        $updateRating = Http::withToken(session('_jwtToken'))->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/rating/update/' . $request->idRating, [
+        $updateRating = Http::withToken(session('_jwtToken'))->put('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/rating/update/' . $request->idRating, [
             "status_rating" => $request->statusRating,
         ]);
 

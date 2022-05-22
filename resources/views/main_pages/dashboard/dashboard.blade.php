@@ -66,13 +66,20 @@
                             </div>
                             @else
                             @foreach ( $produk as $p )
+                            @php $cnt = 0; @endphp
                             @if ($p['penjualan_produk'] > 0)
+                            @php $cnt++; @endphp
                             <ul class="list-group list-group-flush p-0">
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-bottom">
                                     {{ $p['nama_produk'] }}
                                     <span class="badge bg-primary rounded-pill">{{ $p['penjualan_produk'] }}</span>
                                 </li>
                             </ul>
+                            @endif
+                            @if($cnt == 0)
+                                <div class="container-fluid d-flex justify-content-center align-items-center h-100 fw-bold">
+                                    Belum ada Produk Terjual
+                                </div>
                             @endif
                             @endforeach
                             @endif

@@ -16,7 +16,7 @@ class ProdukController extends Controller
 
     public function index()
     {
-        $responseDetailLapak = Http::withToken(session('_jwtToken'))->get('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/' . session('_lapakId') . '/get')->collect();
+        $responseDetailLapak = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/' . session('_lapakId') . '/get')->collect();
         $produkArray = array();
 
         foreach ($responseDetailLapak['data']['produk_lapak'] as $produk) {
@@ -29,7 +29,7 @@ class ProdukController extends Controller
 
     public function viewCreateProduk()
     {
-        $kategoris = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get")->collect();
+        $kategoris = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get")->collect();
 
         return view('main_pages/produk/create_produk', ['kategoris' => $kategoris['data']]);
     }
@@ -125,8 +125,8 @@ class ProdukController extends Controller
     public function viewUpdateProduk($id_produk)
     {
         $_id = Crypt::decryptString($id_produk);
-        $response_detail_produk = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/produk/detail/" . $_id . "/get")->collect();
-        $responseKategoris = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get")->collect();
+        $response_detail_produk = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/produk/detail/" . $_id . "/get")->collect();
+        $responseKategoris = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/kategori/get")->collect();
 
         $dataGambar = array(
             0 => "",
@@ -247,7 +247,7 @@ class ProdukController extends Controller
         # code...
         $client = new Client([
             // Base URI is used with relative requests
-            'base_uri' => 'http://ecommerce-api.paroki-gmaklaten.web.id',
+            'base_uri' => 'https://dev-ecommerce-api.paroki-gmaklaten.web.id',
             // You can set any number of default request options.
             'timeout'  => 20.0,
         ]);
@@ -277,7 +277,7 @@ class ProdukController extends Controller
         $tmp_data = $body_request;
         $arrGambarInput = explode('_', $gambarInput);
 
-        $response_detail_produk = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/produk/detail/" . $_id . "/get")->collect();
+        $response_detail_produk = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/produk/detail/" . $_id . "/get")->collect();
 
         foreach ($response_detail_produk['data']['gambar_produk'] as $gambarDb) {
             $counterHapus = true;

@@ -8,7 +8,7 @@
 
     <!-- icon -->
     <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('assets/font-awesome-icons-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/gematen-login.css') }}">
@@ -35,7 +35,17 @@
                 </div>
             </div>
             @error('error')
-            <div class="text-danger text-center fs-6">{{ $message }}</div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-triangle-exclamation mx-2"></i> {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+                <!-- <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation mx-2"></i>
+                    <div class="w-100">
+                        {{ $message }}
+                    </div>
+                    <button type="button" class="btn-close btn-sm flex-shrink-1" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> -->
             @enderror
             <div id="login-form" class="d-flex flex-column justify-content-center align-items-center">
                 <form class="w-100 mb-5" action="{{route('login.post')}}" method="post">

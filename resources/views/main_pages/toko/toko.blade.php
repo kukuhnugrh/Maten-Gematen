@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="col-11">
                     <div class="row mb-2">
-                        <label for="namaLapak" class="col-sm-3 form-label">*Nama Lapak</label>
+                        <label for="namaLapak" class="col-sm-3 form-label">Nama Lapak <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" id="namaLapak" name="nama_lapak" maxlength="100" oninput="checkTotalHuruf(this.value, 'nama_lapak')" value="{{$lapak['nama_lapak']}}">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <label for="parokiLapak" class="col-sm-3 form-label">*Paroki Lapak</label>
+                        <label for="parokiLapak" class="col-sm-3 form-label">Paroki Lapak <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <select class="form-select wajib" aria-label="Default select example" name="paroki_lapak" id="parokiLapak">
                                 <option value="" selected>Pilih Paroki</option>
@@ -60,7 +60,7 @@
 
                     </div>
                     <div class="row mb-2">
-                        <label for="deskripsiLapak" class="col-sm-3 form-label">*Deskripsi Lapak</label>
+                        <label for="deskripsiLapak" class="col-sm-3 form-label">Deskripsi Lapak <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <textarea class="form-control wajib" name="deskripsi_lapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')">{{$lapak['deskripsi_lapak']}}</textarea>
                             <div class="d-flex bd-highlight">
@@ -75,11 +75,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="noHandphoneLapak" class="col-sm-3 form-label">*Nomor WhatsApp</label>
+                        <label for="noHandphoneLapak" class="col-sm-3 form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">+62</span>
-                                <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{$lapak['no_telepon_lapak']}}" onkeyup="cekKarakterWhatsapp(this.value)" onpaste="return false;">
+                                <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{$lapak['no_telepon_lapak']}}" onkeyup="cekKarakterWhatsapp()" onpaste="return false;">
                             </div>
                             <div id="validatenoHandphoneLapak" class="form-text wajib-isi text-danger"></div>
                             @if ($errors->has('no_telepon_lapak'))
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <label for="kecamatan" class="col-sm-3 form-label">*Kecamatan</label>
+                        <label for="kecamatan" class="col-sm-3 form-label">Kecamatan <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <select class="form-select wajib" name="kecamatan" id="kecamatan">
                                 <option value="" selected>-- Pilih Kecamatan --</option>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <label for="kelurahan" class="col-sm-3 form-label">*Kelurahan</label>
+                        <label for="kelurahan" class="col-sm-3 form-label">Kelurahan <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <select class="form-select wajib" name="kelurahan" id="kelurahan">
                                 <option value="" selected>-- Pilih Kelurahan --</option>
@@ -134,7 +134,7 @@
 
                     </div>
                     <div class="row mb-2">
-                        <label for="detailAlamat" class="col-sm-3 form-label">*Detail Alamat</label>
+                        <label for="detailAlamat" class="col-sm-3 form-label">Detail Alamat <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{$lapak['alamat_lapak']['detail_alamat']}}">
                             <div class="form-text wajib-isi text-danger"></div>
@@ -190,16 +190,15 @@
         }
     }
 
-    function cekKarakterWhatsapp(value, e) {
-        let noHandphone = value;
-        if (value.length == 1 && value[0] == 0) {
+    function cekKarakterWhatsapp() {
+        let noHandphone = $('#noHandphoneLapak').val();
+        if (noHandphone.length == 1 && noHandphone[0] == 0) {
             $('#noHandphoneLapak').val('');
-        } else if (value[0] == 0) {
-            $('#noHandphoneLapak').val(noHandphone.slice(1));
+        } else if (noHandphone[0] == 0) {
+            $('#noHandphoneLapak').val(noHandphone.substr(1, noHandphone.length));
         } else {
-            if (isNaN(value[value.length - 1])) {
-                $('#noHandphoneLapak').val(noHandphone.slice(0, value.length - 1));
-            }
+            let regex = /[a-zA-Z]/g;
+            $('#noHandphoneLapak').val(noHandphone.replace(regex, ""));
         }
     }
 

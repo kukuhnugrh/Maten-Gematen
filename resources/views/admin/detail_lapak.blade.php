@@ -120,7 +120,7 @@
     </div>
     <div class="card">
         <div class="card-header card-color-dashboard">
-            List Produk
+            Daftar Produk
         </div>
         <div class="card-body">
             <div class="row">

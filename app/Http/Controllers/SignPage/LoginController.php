@@ -37,7 +37,7 @@ class LoginController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
+        $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
             "email" => $request->input('email'),
             "password" => $request->input('password'),
             "type" => "manual"

@@ -15,7 +15,7 @@ class HistoriController extends Controller
      */
     public function index()
     {
-        $dataTransaksi = Http::withToken(session('_jwtToken'))->get('https://ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/lapak/' . session('_lapakId') . '/get')->collect();
+        $dataTransaksi = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/transaksi/lapak/' . session('_lapakId') . '/get')->collect();
         $tmp_transaksi = array();
         foreach ($dataTransaksi['data'] as $transaksi) {
             $transaksi['total_harga'] = 0;

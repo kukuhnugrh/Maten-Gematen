@@ -31,7 +31,7 @@ class GetUserLoginInformation
     protected function getNewToken($request, $token)
     {
         $verify = false;
-        $newToken = Http::withToken($token)->accept('application/json')->acceptJson()->post('http://ecommerce-api.paroki-gmaklaten.web.id/api/auth/refresh-token')->collect();
+        $newToken = Http::withToken($token)->accept('application/json')->acceptJson()->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/refresh-token')->collect();
         
         if (isset($newToken['success'])) {
             if ($newToken['success'] == true) {

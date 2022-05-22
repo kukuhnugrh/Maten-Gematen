@@ -109,7 +109,7 @@
                                     <label for="noHandphoneLapak" class="form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">+62</span>
-                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{old('no_telepon_lapak')}}" onkeyup="cekKarakterWhatsapp(this.value)" onpaste="return false;">
+                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{old('no_telepon_lapak')}}" onkeyup="cekKarakterWhatsapp()" onpaste="return false;">
                                     </div>
                                     <div class="form-text wajib-isi text-danger"></div>
                                     @if ($errors->has('no_telepon_lapak'))
@@ -208,16 +208,15 @@
             }
         }
 
-        function cekKarakterWhatsapp(value, e) {
-            let noHandphone = value;
-            if (value.length == 1 && value[0] == 0) {
+        function cekKarakterWhatsapp() {
+            let noHandphone = $('#noHandphoneLapak').val();
+            if (noHandphone.length == 1 && noHandphone[0] == 0) {
                 $('#noHandphoneLapak').val('');
-            } else if (value[0] == 0) {
-                $('#noHandphoneLapak').val(noHandphone.slice(1));
+            } else if (noHandphone[0] == 0) {
+                $('#noHandphoneLapak').val(noHandphone.substr(1, noHandphone.length));
             } else {
-                if (isNaN(value[value.length - 1])) {
-                    $('#noHandphoneLapak').val(noHandphone.slice(0, value.length - 1));
-                }
+                let regex = /[a-zA-Z]/g;
+                $('#noHandphoneLapak').val(noHandphone.replace(regex, ""));
             }
         }
 

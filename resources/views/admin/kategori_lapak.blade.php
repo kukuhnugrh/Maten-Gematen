@@ -1,5 +1,5 @@
 @extends('admin/layout_admin')
-@section('info-halaman', 'List Kategori')
+@section('info-halaman', 'Daftar Kategori Produk')
 
 @section('content-CSS')
 <style>

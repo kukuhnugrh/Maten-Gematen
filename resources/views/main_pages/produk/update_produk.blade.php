@@ -1,20 +1,6 @@
 @extends('layouts/master')
 @section('info-halaman', 'Detail Produk')
 
-@section('content-CSS')
-<style>
-    .deskripsi-produk {
-        height: 250px;
-        resize: none;
-    }
-
-    .card-color-dashboard {
-        background-color: #A13333 !important;
-        color: white;
-    }
-</style>
-@endsection
-
 @section('content')
 <div id="main-content" class="d-flex flex-column">
     @if (session('status_createUpdate_produk'))
@@ -26,7 +12,6 @@
     <form action="{{route('produkku.updateProduk')}}" onsubmit="return validateForm()" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card mb-3">
-
             <div class="card-header card-color-dashboard">
                 Informasi Produk
             </div>
@@ -34,7 +19,7 @@
                 <div class="col-11">
                     <input type="text" name="id_produk" value="{{Crypt::encryptString($detail_produk['_id'])}}" hidden>
                     <div class="row mb-2">
-                        <label for="namaProduk" class="col-sm-3 form-label text-end">*Nama Produk</label>
+                        <label for="namaProduk" class="col-sm-3 form-label text-end">Nama Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="nama_produk" id="namaProduk" placeholder="Masukkan Nama Produk" maxlength="100" autocomplete="off" oninput="checkTotalHuruf(this.value, 'nama_produk')" value="{{$detail_produk['nama_produk']}}">
@@ -50,9 +35,9 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="deskripsiProduk" class="col-sm-3 form-label text-end">*Deskripsi Produk</label>
+                        <label for="deskripsiProduk" class="col-sm-3 form-label text-end">Deskripsi Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
-                            <textarea class="form-control deskripsi-produk wajib" name="deskripsi_produk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')">{{$detail_produk['deskripsi_produk']}}</textarea>
+                            <textarea class="form-control deskripsi-produk wajib" name="deskripsi_produk" id="deskripsiProduk" maxlength="3000" oninput="checkTotalHuruf(this.value,'deskripsi_produk')" style="height: 250px; resize: none;">{{$detail_produk['deskripsi_produk']}}</textarea>
                             <div class="d-flex bd-highlight">
                                 <div id="validateDeskripsiProduk" class="me-auto bd-highlight form-text wajib-isi text-danger"></div>
                                 @if ($errors->has('deskripsi_produk'))
@@ -66,7 +51,7 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="kategoriProduk" class="col-sm-3 form-label text-end">*Kategori Produk</label>
+                        <label for="kategoriProduk" class="col-sm-3 form-label text-end">Kategori Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <select class="form-select wajib" name="kategori_produk" id="kategoriProduk">
                                 <option value=""> -- Pilih Kategori -- </option>
@@ -156,7 +141,7 @@
                 <div class="col-11">
 
                     <div class="row mb-2">
-                        <label for="inputKadaluarsaProduk" class="col-sm-3 form-label text-end">Gambar Produk</label>
+                        <label for="inputKadaluarsaProduk" class="col-sm-3 form-label text-end">Gambar Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" name="gambarInput" id="gambar-Input" value="" hidden>
@@ -208,11 +193,11 @@
             <div class="card-body">
                 <div class="col-11">
                     <div class="row mb-2">
-                        <label for="hargaProduk" class="col-sm-3 form-label text-end">*Harga Produk</label>
+                        <label for="hargaProduk" class="col-sm-3 form-label text-end">Harga Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" onkeyup="cekKarakter(this.value, 'hargaProduk')" value="{{$detail_produk['harga_produk']}}" onpaste="return false;">
+                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" onkeyup="cekKarakter()" value="{{$detail_produk['harga_produk']}}" onpaste="return false;">
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
                             @if ($errors->has('harga_produk'))
@@ -224,7 +209,7 @@
                     </div>
 
                     <div class="row mb-2">
-                        <label for="stokProduk" class="col-sm-3 form-label text-end">*Stok Produk</label>
+                        <label for="stokProduk" class="col-sm-3 form-label text-end">Stok Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="stok_produk" id="stokProduk" autocomplete="off" onkeyup="cekKarakter(this.value, 'stokProduk')" value="{{$detail_produk['stok_produk']}}" onpaste="return false;">
@@ -249,7 +234,7 @@
             <div class="card-body">
                 <div class="col-11">
                     <div class="row mb-2">
-                        <label for="beratProduk" class="col-sm-3 form-label text-end">*Berat Produk</label>
+                        <label for="beratProduk" class="col-sm-3 form-label text-end">Berat Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="text" class="form-control wajib" name="berat_produk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" onkeyup="cekKarakter(this.value, 'beratProduk')" value="{{$detail_produk['berat_produk']}}" onpaste="return false;">
@@ -270,7 +255,7 @@
         </div>
 
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="submit" id="btnSimpanProduk" style="background-color: #DD413F; border-color: #DD413F;">Simpan Produk</button>
+            <button class="btn" type="submit" id="btnSimpanProduk" style="background-color: #A13333; color: white;">Simpan Produk</button>
         </div>
     </form>
 
@@ -339,24 +324,24 @@
         }
     }
 
-    function cekKarakter(value, nameInput) {
-        let data = value;
-        if (value[0] == 0) {
-            $('#' + nameInput).val(data.slice(0, 1));
-        } else {
-            if (isNaN(value[value.length - 1])) {
-                $('#' + nameInput).val(data.slice(0, value.length - 1));
-            }
+    function cekKarakter() {
+        let data = $('#hargaProduk').val();
+        data = data.replace(/[.,]/, "");
+        if(data[0] == 0){
+            $('#hargaProduk').val(data.substr(1, data.length));
+        }else{
+            let regex = /[a-zA-Z]/g;
+            $('#hargaProduk').val(data.replace(regex, ""));
         }
+        formatCurrency();
     }
 
-    // function cekKarakter(e) {
-    //     var charCode = (e.which) ? e.which : event.keyCode;
-    //     if (charCode >= 48 && charCode <= 57) {
-    //         return true
-    //     }
-    //     return false;
-    // }
+    function formatCurrency() {
+        let data = $('#hargaProduk').val();
+        data = data.replace(/[.,]/, "");
+        console.log(data);
+        $('#hargaProduk').val(Intl.NumberFormat('en-US').format(data));
+    }
 
     function itemVariasi(counter, inptSize, inptWarna, inptMotif) {
         var txt1 = "<div id='variasi_" + counter + "'>" +
@@ -460,7 +445,7 @@
     }
 
     $(document).ready(function() {
-
+        formatCurrency();
         let assetGambar = <?php echo json_encode($assetGambar) ?>;
         let gambarDatabase = <?php echo json_encode($detail_produk['gambar_produk']) ?>;
 

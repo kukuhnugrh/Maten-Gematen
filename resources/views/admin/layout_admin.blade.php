@@ -69,7 +69,7 @@
         <div id="sidenav-footer">
             <a href="" id="logout-text" class="d-flex justify-content-center align-items-center p-3 text-decoration-none h-100">
                 <i class="mdi mdi-logout"></i>
-                <span class="mx-3 fw-bold text-white">Logout</span>
+                <span class="mx-3 fw-bold text-white">Keluar</span>
             </a>
             <form id="logout-form" action="{{  route('logout.post')  }}" method="POST" class="d-none">
                 @csrf

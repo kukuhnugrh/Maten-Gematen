@@ -17,8 +17,8 @@ class LapakController extends Controller
      */
     public function index()
     {
-        $parokis = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
-        $responseLapak = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . session('_lapakId') . "/get")->collect();
+        $parokis = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
+        $responseLapak = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . session('_lapakId') . "/get")->collect();
 
         $lapak = $responseLapak['data'];
         $lapak['no_telepon_lapak'] = Str::replaceFirst('0', '', $responseLapak['data']['no_telepon_lapak']);
@@ -33,8 +33,13 @@ class LapakController extends Controller
      */
     public function create()
     {
-        $paroki = Http::withToken(session('_jwtToken'))->get("http://ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
-        return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
+        $paroki = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
+        if($paroki->has("data")){
+            return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
+        }else{
+            session()->flush();
+            return redirect()->route('daftar-lapak.index');
+        }
     }
 
     /**
@@ -111,7 +116,7 @@ class LapakController extends Controller
         $kelurahan = explode("_", $request->kelurahan);
         $paroki = explode('_', $request->paroki_lapak);
 
-        $updateData = Http::withToken(session('_jwtToken'))->accept('application/json')->put('http://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . session("_lapakId"), [
+        $updateData = Http::withToken(session('_jwtToken'))->accept('application/json')->put('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . session("_lapakId"), [
             "nama_lapak" => $request->nama_lapak,
             "paroki_id" => $paroki[0],
             "deskripsi_lapak" => $request->deskripsi_lapak,

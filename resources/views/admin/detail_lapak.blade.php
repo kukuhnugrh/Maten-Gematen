@@ -127,7 +127,7 @@
                 @foreach ($detailLapak['produk_lapak'] as $produk)
                 <div class="col-lg-3 col-sm-4 col-xs-2 mb-3">
                     <div class="card">
-                        <img src="{{ 'https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/' . $produk['gambar_produk'][0] }}" class="rounded" width="100%" height="160px" alt="">
+                        <img src="{{ 'https://dev-ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/' . $produk['gambar_produk'][0] }}" class="rounded" width="100%" height="160px" alt="">
                         <div class="p-2">
                             <div style="height: 50px;">
                                 <h6 class="card-title ellipsis">{{$produk['nama_produk']}}</h6>

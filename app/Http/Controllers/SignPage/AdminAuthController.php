@@ -31,7 +31,7 @@ class AdminAuthController extends Controller
             'confirmpassword' => 'required|string|min:6|same:password',
         ]);
 
-        $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/register', [
+        $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/register', [
             "nama" => $request->input('nama'),
             "email" => $request->input('email'),
             "password" => $request->input('password'),
@@ -52,7 +52,7 @@ class AdminAuthController extends Controller
             'newpassword' => 'required|string|min:6',
             'confirmpassword' => 'required|string|min:6|same:newpassword',
         ]);
-        $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/update/password', [
+        $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/update/password', [
             "oldpassword" => $request->input('email'),
             "newpassword" => $request->input('password'),
             "confirmpassword" => $request->input('confirmpassword'),

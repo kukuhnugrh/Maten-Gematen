@@ -37,17 +37,18 @@ class LoginController extends Controller
             'password' => 'required|string|min:6'
         ]);
         
-        $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
+        $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
             "email" => $request->input('email'),
             "password" => $request->input('password'),
             "type" => "manual",
             "role" => $role
         ]);
         $data = $responseData->collect();
-        
+
         if ($responseData->failed()) {
             return back()->withErrors(['error' => $data['message']]);
         } else {
+
             if ($role == 'user') {
                 if ($data['data']['lapak'] == null) {
                     session(['_userId' => $data['data']['user']['_id'], '_namaUser' => $data['data']['user']['nama'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token']]);
@@ -68,7 +69,7 @@ class LoginController extends Controller
     {
         # code...
         $request->session()->flush();
-        $logout = Http::post('http://ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
+        $logout = Http::post('http://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
         return redirect()->route('login.web');
     }
 

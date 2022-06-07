@@ -30,7 +30,7 @@
                                         @if ($dt['gambar_rating'] == null)
                                         <img src="https://vignette3.wikia.nocookie.net/lego/images/a/ac/No-Image-Basic.png/revision/latest?cb=20130819001030" class="img-fluid" />
                                         @else
-                                        <img src="https://ecommerce-api.paroki-gmaklaten.web.id/rating-produk/{{ $dt['gambar_rating'] }}" class="img-fluid" />
+                                        <img src="https://dev-ecommerce-api.paroki-gmaklaten.web.id/rating-produk/{{ $dt['gambar_rating'] }}" class="img-fluid" />
                                         @endif
                                     </div>
                                     <div class="col-md-8">

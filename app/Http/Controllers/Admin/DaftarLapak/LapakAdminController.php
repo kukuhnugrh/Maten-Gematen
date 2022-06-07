@@ -18,7 +18,7 @@ class LapakAdminController extends Controller
         try {
             $response = $this->getClientHttp()->request('GET', '/api/lapak/get', [
                 'headers' => [
-                    'Authorization' => "Bearer" . session('_jwtToken')
+                    'Authorization' => "Bearer " . session('_jwtToken')
                 ],
             ]);
             $dataLapak = json_decode($response->getBody()->getContents(), true);
@@ -35,7 +35,7 @@ class LapakAdminController extends Controller
             $bodyError = Psr7\Message::parseMessage(Psr7\Message::toString($e->getResponse()))['body'];
 
             $message = json_decode($bodyError);
-
+            session()->flush();
             return back()->withErrors(['error' => $message]);
         }
         //$dataLapak = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get")->collect();

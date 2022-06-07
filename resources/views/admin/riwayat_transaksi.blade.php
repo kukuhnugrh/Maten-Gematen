@@ -46,7 +46,7 @@
                         @foreach ($dt['produk'] as $dtproduk )
                         <div id="produk-transaksi" class="row mb-3 pb-3 border-bottom border-secondary">
                             <div class="col-4 center-item">
-                                <img src="https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/{{ $dtproduk['gambar_produk'][0] }}" class='rounded'>
+                                <img src="https://dev-ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/{{ $dtproduk['gambar_produk'][0] }}" class='rounded'>
                             </div>
                             <div class="col-8 table-responsive">
                                 <table class="table table-borderless table-hover " id="tabel-kategori" cellspacing="0" width="100%">

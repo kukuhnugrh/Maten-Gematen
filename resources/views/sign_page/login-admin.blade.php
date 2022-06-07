@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Mande Gematen</title>
+    <title>Login Admin</title>
 
     <!-- icon -->
     <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
@@ -42,7 +42,7 @@
             </div>
             @enderror
             <div id="login-form" class="d-flex flex-column justify-content-center align-items-center">
-                <form class="w-100 mb-3" action="{{ route('login.post', ['role'=>'user']) }}" method="post">
+                <form class="w-100 mb-3" action="{{ route('loginadmin.post', ['role'=>'admin']) }}" method="post">
                     @csrf
                     <div class="mb-3 w-100">
                         <label for="email" class="form-label fw-bold">Email</label>
@@ -65,15 +65,6 @@
                         <button type="submit" class="btn btn-primary">Masuk</button>
                     </div>
                 </form>
-                <div class="mb-3" style="color: #7f8c8d;">
-                    atau
-                </div>
-                <a id="login-with-google" href="{{ route('auth/google') }}">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('assets/img/google_icon.png') }}" class="rounded-circle">
-                        <p class="text-center">Masuk Dengan Akun Google</p>
-                    </div>
-                </a>
             </div>
         </div>
     </div>

@@ -15,18 +15,13 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
-Route::get('/clean', function() {
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Session::flush();
-    Log::info("Cache - Route - Config - View Clear");
-});
-
 //LOGIN
 Route::get('/login', ['as' => 'login.web', 'uses' => 'SignPage\LoginController@index']);
-Route::post('/login', ['as' => 'login.post', 'uses' => 'SignPage\LoginController@checkUserLogin']);
+Route::post('/login/{role}', ['as' => 'login.post', 'uses' => 'SignPage\LoginController@checkUserLogin']);
+
+//LOGIN ADMIN
+Route::get('/admin', ['as' => 'loginadmin.web', 'uses' => 'SignPage\AdminAuthController@index']);
+Route::post('/loginAdmin/{role}', ['as' => 'loginadmin.post', 'uses' => 'SignPage\LoginController@checkUserLogin']);
 
 //GOOGLE LOGIN
 Route::get('google', ['as' => 'auth/google', 'uses' => 'SocialiteAuthController@googleRedirect']);
@@ -59,9 +54,9 @@ Route::middleware(['auth.login.information'])->group(function () {
 
     // ADMIN
     Route::middleware(['is.admin'])->group(function () {
-        Route::group(['prefix' => 'admin/dashboard', 'as' => 'admindashboard.'], function () {
-            Route::get('/', ['as' => 'index', 'uses' => 'Admin\Dashboard\DashboardAdminController@index']);
-        });
+        Route::get('/register', ['as' => 'register.web', 'uses' => 'SignPage\AdminAuthController@redirectDaftarAdmin']);
+        Route::post('/register', ['as' => 'register.post', 'uses' => 'SignPage\AdminAuthController@createAdmin']);
+        Route::post('/changepassword', ['as' => 'changepassword.post', 'uses' => 'SignPage\AdminAuthController@changePassword']);
 
         Route::group(['prefix' => 'admin/daftar-lapak', 'as' => 'daftar-lapak.'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'Admin\DaftarLapak\LapakAdminController@index']);
@@ -83,6 +78,10 @@ Route::middleware(['auth.login.information'])->group(function () {
         Route::group(['prefix' => 'admin/verifikasiRating', 'as' => 'verifikasi-rating.'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'Admin\Verifikasi\VerifikasiController@indexVerifikasiRating']);
             Route::post('/update-status', ['as' => 'updateStatus', 'uses' => 'Admin\Verifikasi\VerifikasiController@updateStatusRating']);
+        });
+
+        Route::group(['prefix' => 'admin/riwayatTransaksi', 'as' => 'riwayat-transaksi.'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'Admin\Transaksi\HistoriTransaksi@index']);
         });
     });
 });

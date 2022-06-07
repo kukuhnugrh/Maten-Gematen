@@ -70,8 +70,8 @@
                         '</div>'
                     );
                 }
-            }
-;        }
+            };
+        }
     }
 
     function appendLapak(data) {
@@ -106,12 +106,17 @@
                 result = lapak.nama_lapak.match(new RegExp(value, "gi"));
                 if (result != null) {
                     count++;
-                    if(lapak.status_lapak == type){
+                    if (type == 'SEMUA') {
                         $("#data-lapak").append(appendLapak(lapak));
+                    } else {
+                        if (lapak.status_lapak == type) {
+                            $("#data-lapak").append(appendLapak(lapak));
+                        }
                     }
-                } 
+
+                }
             });
-            if ( count == 0 ) {
+            if (count == 0) {
                 $("#body-lapak").append('<div id="data-lapak" class="d-flex justify-content-center align-items-center"><span class="fw-bold">Lapak Tidak Ditemukan</span></div>');
             }
         } else {
@@ -123,7 +128,7 @@
         $("#semua-status").css('display', '');
         $("#status-active").css('display', 'none');
         $("#status-inactive").css('display', 'none');
-        
+
         foreachLapak("SEMUA");
 
         $("#semua-lapak").click(function(e) {

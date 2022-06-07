@@ -197,7 +197,7 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" onkeyup="cekKarakter()" value="{{$detail_produk['harga_produk']}}" onpaste="return false;">
+                                <input type="text" class="form-control wajib" name="harga_produk" id="hargaProduk" autocomplete="off" placeholder="Masukkan Harga Produk" onkeyup="cekKarakter('hargaProduk')" value="{{$detail_produk['harga_produk']}}" onpaste="return false;">
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
                             @if ($errors->has('harga_produk'))
@@ -212,7 +212,7 @@
                         <label for="stokProduk" class="col-sm-3 form-label text-end">Stok Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" name="stok_produk" id="stokProduk" autocomplete="off" onkeyup="cekKarakter(this.value, 'stokProduk')" value="{{$detail_produk['stok_produk']}}" onpaste="return false;">
+                                <input type="text" class="form-control wajib" name="stok_produk" id="stokProduk" autocomplete="off" onkeyup="cekKarakter('stokProduk')" value="{{$detail_produk['stok_produk']}}" onpaste="return false;">
                             </div>
                             <div id="validateStokProduk" class="form-text wajib-isi text-danger"></div>
                             @if ($errors->has('stok_produk'))
@@ -237,7 +237,7 @@
                         <label for="beratProduk" class="col-sm-3 form-label text-end">Berat Produk <span class="text-danger">*</span></label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control wajib" name="berat_produk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" onkeyup="cekKarakter(this.value, 'beratProduk')" value="{{$detail_produk['berat_produk']}}" onpaste="return false;">
+                                <input type="text" class="form-control wajib" name="berat_produk" id="beratProduk" autocomplete="off" placeholder="Masukkan Berat Produk" onkeyup="cekKarakter('beratProduk')" value="{{$detail_produk['berat_produk']}}" onpaste="return false;">
                                 <span class="input-group-text">gram</span>
                             </div>
                             <div id="validateHargaProduk" class="form-text wajib-isi text-danger"></div>
@@ -293,6 +293,7 @@
         let pesanError = $('.wajib-isi');
         let jumlahError = 0;
         let inputTotalVariasi = "<input type='text' class='form-control' name='inptTotalVariasi' value='" + totalVariasi + "' hidden>";
+        $('#hargaProduk').val($('#hargaProduk').val().replace(/\D/g, ""));
         $("#total_variasi").append(inputTotalVariasi);
         $('#validateGambarProduk').text('');
 
@@ -324,21 +325,23 @@
         }
     }
 
-    function cekKarakter() {
-        let data = $('#hargaProduk').val();
-        data = data.replace(/[.,]/, "");
-        if(data[0] == 0){
-            $('#hargaProduk').val(data.substr(1, data.length));
+    function cekKarakter(idName) {
+        let data = $('#'+idName).val();
+        data = data.replace(/\D/g, "");
+        if(data[0] == 0 && data.length>1){
+            $('#'+idName).val(data.substr(1, data.length));
         }else{
-            let regex = /[a-zA-Z]/g;
-            $('#hargaProduk').val(data.replace(regex, ""));
+            let regex = /\D/g;
+            $('#'+idName).val(data.replace(regex, ""));
         }
-        formatCurrency();
+        if(idName == 'hargaproduk'){
+            formatCurrency();
+        }
     }
 
     function formatCurrency() {
         let data = $('#hargaProduk').val();
-        data = data.replace(/[.,]/, "");
+        data = data.replace(/\D/g, "");
         console.log(data);
         $('#hargaProduk').val(Intl.NumberFormat('en-US').format(data));
     }

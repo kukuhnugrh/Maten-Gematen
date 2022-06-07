@@ -134,7 +134,7 @@ class ProdukController extends Controller
             2 => ""
         );
         for ($i = 0; $i < count($response_detail_produk['data']['gambar_produk']); $i++) {
-            $dataGambar[$i] = "https://ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/" . $response_detail_produk['data']['gambar_produk'][$i];
+            $dataGambar[$i] = "https://dev-ecommerce-api.paroki-gmaklaten.web.id/gambar-produk/" . $response_detail_produk['data']['gambar_produk'][$i];
         }
 
         return view('main_pages/produk/update_produk', ['detail_produk' => $response_detail_produk['data'], 'kategoris' => $responseKategoris['data'], 'assetGambar' => $dataGambar]);

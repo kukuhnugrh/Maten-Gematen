@@ -34,9 +34,10 @@ class LapakController extends Controller
     public function create()
     {
         $paroki = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
-        if($paroki->has("data")){
-            return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
-        }else{
+        if ($paroki->has("data")) {
+            return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
+            return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
+        } else {
             session()->flush();
             return redirect()->route('daftar-lapak.index');
         }
@@ -65,7 +66,7 @@ class LapakController extends Controller
         $kelurahan = explode("_", $request->input('kelurahan'));
         $paroki = explode('_', $request->paroki_lapak);
 
-        $responseData = Http::withToken(session('_jwtToken'))->accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/lapak/create', [
+        $responseData = Http::withToken(session('_jwtToken'))->accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/create', [
             "user_id" => session("_userId"),
             "nama_lapak" => $request->nama_lapak,
             "paroki_id" => $paroki[0],

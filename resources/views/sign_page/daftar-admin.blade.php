@@ -15,6 +15,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Daftar</title>
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -28,52 +29,66 @@
     <div id="wrapper" class="container-fluid">
         <div id="form-wrapper" class="p-4">
             <div id="login-header" class="d-flex flex-column justify-content-center align-items-center"> 
-                <div class="d-flex justify-content-center align-items-center w-100 px-5">
+                <div class="d-flex justify-content-center align-items-center">
                     <img src="{{ asset('assets/img/icon.ico') }}" class="rounded-circle">
-                    <div class="flex-grow-1">
-                        <p class="gradient-text text-center w-100">Mande Gematen</p>
-                    </div>
+                    <p class="gradient-text text-center w-100">Mande Gematen</p>
                 </div>
             </div>
             @error('error')
-            <div class="alert alert-danger alert-dismissible fade show mt-2 mb-0" role="alert">
-                <i class="fa-solid fa-triangle-exclamation mx-2"></i> {{ $message }}
-                <button type="button" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-triangle-exclamation mx-2"></i></button>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-triangle-exclamation mx-2"></i> {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @enderror
             <div id="login-form" class="d-flex flex-column justify-content-center align-items-center">
-                <form class="w-100 mb-3" action="{{ route('login.post', ['role'=>'user']) }}" method="post">
+                <form class="w-100 mb-5" action="{{route('register.post')}}" method="post" id="signup-form">
                     @csrf
                     <div class="mb-3 w-100">
-                        <label for="email" class="form-label fw-bold">Email</label>
-                        <input type="email" class="form-control shadow-none @error('email') is-invalid @enderror" id="email" placeholder="nama@email.com" name="email" autocomplete="email" required>
+                        <label for="nama" class="form-label fw-bold fs-6">Nama</label>
+                        <input type="text" class="form-control shadow-none @error('email') is-invalid @enderror" id="nama" aria-describedby="namaHelp" placeholder="Nama Admin" name="nama" oninput="regexNama()" required>
+                        @error('nama')
+                        <div class="alert alert-danger">
+                            <div class="text-danger fs-6">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 w-100">
+                        <label for="email" class="form-label fw-bold fs-6">Email</label>
+                        <input type="email" class="form-control shadow-none @error('email') is-invalid @enderror" id="email" aria-describedby="emailHelp" placeholder="nama@email.com" name="email" required>
                         @error('email')
-                        <div class="text-danger fs-6">{{ $message }}</div>
+                        <div class="alert alert-danger">
+                            <div class="text-danger fs-6">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-bold fs-6">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control shadow-none @error('password') is-invalid @enderror" id="password" name="password" required>
+                            <span class="input-group-text" id="showPasswordToogle" onclick="showPassword('tooggle-icon-password', 'password')"><i id="tooggle-icon-password" class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
+                        @error('password')
+                        <div class="alert alert-danger">
+                            <div class="text-danger fs-6">{{ $message }}</div>
+                        </div>
                         @enderror
                     </div>
                     <div class="mb-5">
-                        <label for="password" class="form-label fw-bold">Password</label>
+                        <label for="confirmpassword" class="form-label fw-bold fs-6">Confirm Password</label>
                         <div class="input-group">
-                            <input type="password" class="form-control shadow-none @error('password') is-invalid @enderror" id="password" name="password" autocomplete="password" required>
-                            <span class="input-group-text" id="showPasswordToogle"><i id="tooggle-icon" class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                            <input type="password" class="form-control shadow-none @error('confirmpassword') is-invalid @enderror" id="confirmpassword" name="confirmpassword" required>
+                            <span class="input-group-text" id="showPasswordToogle" onclick="showPassword('tooggle-icon-confirmpassword', 'password_confirmation')"><i id="tooggle-icon-confirmpassword" class="fa fa-eye-slash" aria-hidden="true"></i></span>
                         </div>
-                        @error('password')
-                        <div class="text-danger fs-6">{{ $message }}</div>
+                        @error('confirmpassword')
+                        <div class="alert alert-danger">
+                            <div class="text-danger fs-6">{{ $message }}</div>
+                        </div>
                         @enderror
                     </div>
                     <div class="h-25 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">Masuk</button>
+                        <button type="submit" class="btn btn-primary w-75" style="background-color: #DC413E; border-color: #DC413E;">Daftar</button>
                     </div>
                 </form>
-                <div class="mb-3" style="color: #7f8c8d;">
-                    atau
-                </div>
-                <a id="login-with-google" href="{{ route('auth/google') }}">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('assets/img/google_icon.png') }}" class="rounded-circle">
-                        <p class="text-center">Masuk Dengan Akun Google</p>
-                    </div>
-                </a>
             </div>
         </div>
     </div>
@@ -81,22 +96,29 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
     <script>
+        function showPassword(inputId, elementName){
+            $('#'+inputId).toggleClass("fa-eye fa-eye-slash");
+            var inputType = $('[name='+elementName+']').attr('type');
+            if (inputType == 'password') {
+                $('[name='+elementName+']').attr('type', 'text');
+            } else {
+                $('[name='+elementName+']').attr('type', 'password');
+            }
+        }
+
+        function regexNama(){
+            var value = $('#nama').val();
+            console.log(value);
+            $('#nama').val(value.replace(/[^a-zA-Z\s]/, ""));
+        }
+
         $(document).ready(function() {
             $('#email').on('input', function() {
-                console.log('coba');
                 $(this).validate();
                 $(this).valid();
-                $('#email-error').addClass('text-danger fs-6');
+                $('#inputEmail-error').addClass('text-danger fs-6');
             });
-            $('#showPasswordToogle').on('click', function() {
-                $('#tooggle-icon').toggleClass("fa-eye fa-eye-slash");
-                var inputType = $('#password').attr('type');
-                if (inputType == 'password') {
-                    $('#password').attr('type', 'text');
-                } else {
-                    $('#password').attr('type', 'password');
-                }
-            });
+            
             jQuery.extend(jQuery.validator.messages, {
                 required: "This field is required.",
                 remote: "Please fix this field.",

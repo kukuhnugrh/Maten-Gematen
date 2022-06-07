@@ -5,20 +5,22 @@
 }
 
 #wrapper {
-    background-color: #dcdde1;
+    background-color: #DDDDDD;
     display: flex;
     align-items: center;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 #form-wrapper {
-    background-color: #FEFEFE;
+    background-color: #F9F7F7;
     margin: auto;
     border-radius: 1vmax;
-    border: 1px solid #c23616;
-    max-width: 30vw!important;
-    height: 80%;
+    border: 1px solid #990000;
+    max-width: 520px;
+    height: 720px!important;
 }
 
 #login-header {
@@ -31,18 +33,22 @@
 
 #login-header img {
     height: auto;
-    max-width: 20%;
+    max-width: 60px;
     border: none;
     display: block;
 }
 
 #login-header p {
-    font-size: calc((100vw/100)*2.5);
+    font-size: 32px;
     margin: 0;
 }
 
 #login-form {
     height: 80%;
+}
+
+label {
+    font-size: 16px!important; 
 }
 
 #login-form input {
@@ -51,16 +57,20 @@
     border-left-style: hidden;
     border-bottom-style: groove;
     border-radius: 0;
+    background-color: #F9F7F7;    
 }
 
 #login-form button {
-    height: 75%;
+    height: 32px;
+    width: 360px;
     line-height: 0;
-    font-size: calc((100vw/100)*1)!important;
+    font-size: 16px;
+    background-color: #990000;
+    border-color: #990000;
 }
 
-#showPasswordToogle {
-    background-color: #FEFEFE;
+#showPasswordToogle{
+    background-color: #F9F7F7;
     border-top-style: hidden;
     border-right-style: hidden;
     border-bottom-style: groove;
@@ -72,24 +82,15 @@
 }
 
 #login-with-google img{
-    max-width: 10%;
+    max-width: 32px;
 }
 
 #login-with-google p{
-    font-size: calc((100vw/100)*1);
+    font-size: 16px;
     margin: 0;
     margin-left: 10px;
     margin-right: 10px;
     color: #27ae60;
-}
-
-label,
-button {
-    font-size: 1.5vw !important;
-}
-
-input {
-    background-color: #c23616;
 }
 
 .gradient-text {
@@ -100,7 +101,7 @@ input {
     -webkit-text-fill-color: transparent;
 }
 
-/* Tablet */
+/* Tablet
 @media (max-width: 1200px) {
 
     #login-header p {
@@ -108,35 +109,51 @@ input {
     }
 
     #form-wrapper {
-        max-width: 60%!important;
-        width: 100vw!important;
-        height: 80%;
-    }
-
-    #login-with-google p{
-        font-size: calc((100vw/100)*1.5);
-        margin: 0;
-        margin-left: 10px;
-        margin-right: 10px;
-        color: #27ae60;
-    }
-}
-
-/* Phone */
-@media (max-width: 768px) {
-
-    #form-wrapper {
-        max-width: 100%!important;
-        width: 100vw!important;
+        max-width: 480px!important;
         height: 80%;
     }
 
     #login-header p {
-        font-size: calc((100vw/100)*4.5);
+        font-size: 28px;
+        margin: 0;
+    }
+
+    #login-form button {
+        font-size: 14px;
+    }
+
+    #login-with-google p{
+        font-size: 14px;
+    }
+} */
+
+/* Phone */
+@media screen and (max-width: 576px) {
+
+    #wrapper {
+        padding: 0;
+    }
+    
+    #form-wrapper {
+        max-width: 100vw;
+        width: 100vw;
+        margin: 0;
+    }
+
+    #login-header img {
+        max-width: calc((100vw/100)*10);
+    }
+
+    #login-header p {
+        font-size: calc((100vw/100)*6);
     }
 
     #login-header span {
         font-size: 7vw;
+    }
+
+    #login-form button {
+        font-size: calc((100vw/100)*5);
     }
 
     .gradient-text {
@@ -146,20 +163,19 @@ input {
         -webkit-text-fill-color: transparent;
     }
 
-    label,
-    button {
-        font-size: 3.5vw !important;
+    label {
+        font-size: calc((100vw/100)*5)!important; 
+    }
+
+    #login-form input {
+        font-size: calc((100vw/100)*5);
     }
 
     #login-with-google img{
-        max-width: 10%;
+        max-width: calc((100vw/100)*10);
     }
     
     #login-with-google p{
-        font-size: calc((100vw/100)*2.5);
-        margin: 0;
-        margin-left: 10px;
-        margin-right: 10px;
-        color: #27ae60;
+        font-size: calc((100vw/100)*4);
     }
 }

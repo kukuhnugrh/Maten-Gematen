@@ -132,6 +132,7 @@
     let kategoris = <?php echo json_encode($kategoriProduk) ?>;
 
     function listKategori(kategori) {
+
         let dataKategori = kategori["_id"] + '_' + kategori["iconText"] + '_' + kategori["iconName"];
         let data = '<tr style="border-bottom: 1px solid #dcdde1;">' +
             '<td><i class="mdi mdi-' + kategori["iconText"] + '"></i></td>' +

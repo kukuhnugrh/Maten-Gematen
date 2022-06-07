@@ -30,20 +30,20 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function checkUserLogin(Request $request)
+    public function checkUserLogin(Request $request, $role)
     {
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6'
         ]);
-
-        $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
+        
+        $responseData = Http::accept('application/json')->post('https://ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [
             "email" => $request->input('email'),
             "password" => $request->input('password'),
-            "type" => "manual"
+            "type" => "manual",
+            "role" => $role
         ]);
         $data = $responseData->collect();
-
         if ($responseData->failed()) {
             return back()->withErrors(['error' => $data['message']]);
         } else {
@@ -67,7 +67,7 @@ class LoginController extends Controller
     {
         # code...
         $request->session()->flush();
-        $logout = Http::post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
+        $logout = Http::post('http://ecommerce-api.paroki-gmaklaten.web.id/api/auth/logout');
         return redirect()->route('login.web');
     }
 

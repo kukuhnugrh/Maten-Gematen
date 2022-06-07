@@ -184,6 +184,7 @@ a.btn {
     border-radius: 10px;
 }
 
+
 @media (max-width: 1200px) {
     .card-title {
         padding: 0 !important;

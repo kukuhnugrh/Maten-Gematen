@@ -197,7 +197,7 @@
         } else if (noHandphone[0] == 0) {
             $('#noHandphoneLapak').val(noHandphone.substr(1, noHandphone.length));
         } else {
-            let regex = /[a-zA-Z]/g;
+            let regex = /\D/g;
             $('#noHandphoneLapak').val(noHandphone.replace(regex, ""));
         }
     }

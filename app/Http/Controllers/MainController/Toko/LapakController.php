@@ -51,6 +51,7 @@ class LapakController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'nama_lapak' => 'required|max:100',
             'paroki_lapak' => 'required',
@@ -62,8 +63,6 @@ class LapakController extends Controller
         ]);
 
         //Simpan Data Lapak kedalam database
-        $kecamatan = explode("_", $request->input('kecamatan'));
-        $kelurahan = explode("_", $request->input('kelurahan'));
         $paroki = explode('_', $request->paroki_lapak);
 
         $responseData = Http::withToken(session('_jwtToken'))->accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/create', [
@@ -72,8 +71,8 @@ class LapakController extends Controller
             "paroki_id" => $paroki[0],
             "deskripsi_lapak" => $request->deskripsi_lapak,
             "alamat_lapak" => array(
-                "kecamatan" => $kecamatan[1],
-                "kelurahan" => $kelurahan[1],
+                "kecamatan" => $request->kecamatan,
+                "kelurahan" => $request->kelurahan,
                 "detail_alamat" => $request->detailAlamat,
                 "longitude" => $request->longitude,
                 "latitude" => $request->latitude
@@ -101,7 +100,7 @@ class LapakController extends Controller
      */
     public function update(Request $request)
     {
-
+        
         $validated = $request->validate([
             'nama_lapak' => 'required|max:100',
             'paroki_lapak' => 'required',

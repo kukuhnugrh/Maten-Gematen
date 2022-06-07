@@ -55,7 +55,7 @@
             <form class="p-0" onsubmit="return validateForm()" action="{{route('create-lapak')}}" method="POST">
                 @csrf
                 <div class="d-flex justify-content-center">
-                    <div class="col-12 col-md-9 col-sm-9 ">
+                    <div class="col-12 col-md-6 col-sm-9 ">
                         <div class="card mb-3">
                             <div class="card-header text-white">
                                 Informasi Toko
@@ -65,7 +65,7 @@
                                 <div class="mb-2">
                                     <label for="namaLapak" class="form-label">Nama Lapak <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control wajib" id="namaLapak" name="nama_lapak" maxlength="100" value="{{old('nama_lapak')}}" oninput="checkTotalHuruf(this.value, 'nama_lapak')">
+                                        <input type="text" class="form-control wajib" id="namaLapak" name="nama_lapak" maxlength="100" value="{{old('nama_lapak')}}" oninput="checkTotalHuruf(this.value, 'nama_lapak')" placeholder="Masukkan Nama Lapak" required>
                                         <span class="input-group-text"><span id="totalNamaLapak">0</span>/100</span>
                                     </div>
                                     <div class="form-text wajib-isi text-danger"></div>
@@ -95,7 +95,7 @@
                                         <label for="deskripsiLapak" class="me-auto bd-highlight form-label">Deskripsi Lapak <span class="text-danger">*</span></label>
                                         <label class="bd-highlight form-label"><span id="totalDeskripsiLapak">0</span>/3000</span></label>
                                     </div>
-                                    <textarea class="form-control wajib" name="deskripsi_lapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')">{{old('deskripsi_lapak')}}</textarea>
+                                    <textarea class="form-control wajib" name="deskripsi_lapak" id="deskripsiLapak" style="height: 250px;resize: none;" maxlength="3000" oninput="checkTotalHuruf(this.value, 'deskripsi_lapak')" placeholder="Masukkan Deskripsi Lapak">{{old('deskripsi_lapak')}}</textarea>
                                     <div class="form-text wajib-isi text-danger"></div>
                                     @if ($errors->has('deskripsi_lapak'))
                                     @foreach ($errors->get('deskripsi_lapak') as $message)
@@ -107,7 +107,7 @@
                                     <label for="noHandphoneLapak" class="form-label">Nomor WhatsApp <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">+62</span>
-                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{old('no_telepon_lapak')}}" onkeyup="cekKarakterWhatsapp()" onpaste="return false;">
+                                        <input type="text" class="form-control wajib" id="noHandphoneLapak" autocomplete="off" name="no_telepon_lapak" value="{{old('no_telepon_lapak')}}" onkeyup="cekKarakterWhatsapp()" onpaste="return false;" placeholder="812345678">
                                     </div>
                                     <div class="form-text wajib-isi text-danger"></div>
                                     @if ($errors->has('no_telepon_lapak'))
@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="detailAlamat" class="form-label">Detail Alamat <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{old('detailAlamat')}}">
+                                    <input type="text" class="form-control wajib" name="detailAlamat" id="detailAlamat" value="{{old('detailAlamat')}}" placeholder="Masukkan Alamat Lapak">
                                     <div class="form-text wajib-isi text-danger"></div>
                                     @if ($errors->has('detailAlamat'))
                                     @foreach ($errors->get('detailAlamat') as $message)

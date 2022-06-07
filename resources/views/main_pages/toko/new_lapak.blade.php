@@ -243,24 +243,26 @@
 
 
         $(document).ready(function() {
+            let kecamatans = [];
             $.ajax({
-                url: "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=3310",
+                url: "https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get/wilayah-klaten",
                 success: function(kecamatan) {
-                    $.each(kecamatan.kecamatan, function(index, data) {
-                        $('#kecamatan').append('<option value="' + data.id + '_' + data.nama + '">' + data.nama + '</option>');
-                    });
-                    $("#kecamatan").on("change", function(e) {
-                        let kecamatanArr = e.target.value.split("_")
-                        $('#kelurahan').empty();
-                        $('#kelurahan').append('<option value="">-- Pilih Kelurahan --</option>');
-                        if (e.target.value != "") {
-                            $.ajax({
-                                url: "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=" + kecamatanArr[0],
-                                success: function(kelurahan) {
-                                    $.each(kelurahan.kelurahan, function(index, data) {
-                                        $('#kelurahan').append('<option value="' + data.id + '_' + data.nama + '">' + data.nama + '</option>');
-                                    });
-                                }
+                    kecamatans = kecamatan.data;
+                    $.each(kecamatan.data, function(index, data) {
+                        $('#kecamatan').append('<option value="' + data.kecamatan + '">' + data.kecamatan + '</option>');
+                        
+                    });                   
+                }
+            });
+
+            $("#kecamatan").on("change", function(e) {
+                $('#kelurahan').empty();
+                $('#kelurahan').append('<option value="">-- Pilih Kelurahan --</option>');
+                if (e.target.value != "") {
+                    $.each(kecamatans, function(index, data) {
+                        if ($('#kecamatan').val() == data.kecamatan) {
+                            $.each(data.kelurahan, function(index, data) {
+                                $('#kelurahan').append('<option value="' + data.kelurahan + '">' + data.kelurahan + '</option>');
                             });
                         }
                     });

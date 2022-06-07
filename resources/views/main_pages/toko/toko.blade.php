@@ -180,6 +180,7 @@
 <script>
     let cekLokasi = false;
     let marker = "";
+    let kecamatans = [];
 
     function checkTotalHuruf(value, jnsInput) {
         let total = value.length;
@@ -229,17 +230,15 @@
         $('#kelurahan').empty();
         $('#kelurahan').append('<option value="">-- Pilih Kelurahan --</option>');
         if (kecamatan != "") {
-            $.ajax({
-                url: "https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=" + kecamatan,
-                success: function(kelurahan) {
-                    $kelurahanDb = <?php echo json_encode($lapak['alamat_lapak']['kelurahan']) ?>;
-                    $.each(kelurahan.kelurahan, function(index, data) {
-                        if ($kelurahanDb == data.nama) {
-                            $('#kelurahan').append('<option value="' + data.id + '_' + data.nama + '" selected>' + data.nama + '</option>');
+            let kelurahanDb = <?php echo json_encode($lapak['alamat_lapak']['kelurahan']) ?>;
+            $.each(kecamatans, function(index, data) {
+                if (kecamatan == data.kecamatan) {
+                    $.each(data.kelurahan, function(index, data) {
+                        if (kelurahanDb == data.kelurahan) {
+                            $('#kelurahan').append('<option value="'+ data.kelurahan + '" selected>' + data.kelurahan + '</option>');
                         } else {
-                            $('#kelurahan').append('<option value="' + data.id + '_' + data.nama + '">' + data.nama + '</option>');
+                            $('#kelurahan').append('<option value="' + data.kelurahan + '">' + data.kelurahan + '</option>');
                         }
-
                     });
                 }
             });
@@ -284,24 +283,25 @@
         $("#totalDeskripsiLapak").text($('#deskripsiLapak').val().length);
 
         $.ajax({
-            url: "https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=3310",
+            url: "https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get/wilayah-klaten",
             success: function(kecamatan) {
-                $kecamatanDb = <?php echo json_encode($lapak['alamat_lapak']['kecamatan']) ?>;
-                $.each(kecamatan.kecamatan, function(index, data) {
-                    if ($kecamatanDb == data.nama) {
-                        $('#kecamatan').append('<option value="' + data.id + '_' + data.nama + '" selected>' + data.nama + '</option>');
+                kecamatans = kecamatan.data;
+                let kecamatanDb = <?php echo json_encode($lapak['alamat_lapak']['kecamatan']) ?>;
+                $.each(kecamatan.data, function(index, data) {
+                    if (kecamatanDb == data.kecamatan) {
+                        $('#kecamatan').append('<option value="'  + data.kecamatan + '" selected>' + data.kecamatan + '</option>');
                     } else {
-                        $('#kecamatan').append('<option value="' + data.id + '_' + data.nama + '">' + data.nama + '</option>');
+                        $('#kecamatan').append('<option value="'  + data.kecamatan + '">' + data.kecamatan + '</option>');
                     }
 
                 });
-                let slctKecamatan = $('#kecamatan').val().split("_");
-                if (slctKecamatan[0] != "") {
-                    cekKelurahan(slctKecamatan[0]);
+                let slctKecamatan = kecamatanDb;
+                if (slctKecamatan != "") {
+                    cekKelurahan(slctKecamatan);
                 }
                 $("#kecamatan").on("change", function(e) {
-                    let kecamatanArr = e.target.value.split("_");
-                    cekKelurahan(kecamatanArr[0]);
+                    let kecamatanArr = e.target.value;
+                    cekKelurahan(kecamatanArr);
                 });
 
             }

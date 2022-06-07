@@ -44,10 +44,11 @@ class LoginController extends Controller
             "role" => $role
         ]);
         $data = $responseData->collect();
+        
         if ($responseData->failed()) {
             return back()->withErrors(['error' => $data['message']]);
         } else {
-            if ($data['data']['user']['role'] == 'user') {
+            if ($role == 'user') {
                 if ($data['data']['lapak'] == null) {
                     session(['_userId' => $data['data']['user']['_id'], '_namaUser' => $data['data']['user']['nama'], 'role' => $data['data']['user']['role'], '_jwtToken' => $data['data']['access_token']]);
                     return redirect()->route('new-lapak');

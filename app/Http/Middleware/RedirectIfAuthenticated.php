@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
             } elseif ($request->session()->get('role') == 'user') {
                 return redirect()->route('home');
             } elseif ($request->session()->get('role') == 'admin') {
-                return redirect()->route('admindashboard.index');
+                return redirect()->route('daftar-lapak.index');
             }
         }
 

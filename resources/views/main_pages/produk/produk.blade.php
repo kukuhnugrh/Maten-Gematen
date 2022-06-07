@@ -18,8 +18,13 @@
         @else
         <a href="{{ route('produkku.viewCreateProduk') }}" class='btn btn-primary text-white center-item w-25'>Tambah Produk</a>
         @endif
-
     </div>
+
+    @if (session('successMessage'))
+    <div class="alert alert-success" role="alert">
+        {{ session('successMessage') }}
+    </div>
+    @endif
 
     <div class="card ">
         <div class="card-header">

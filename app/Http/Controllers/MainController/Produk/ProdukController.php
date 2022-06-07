@@ -109,7 +109,7 @@ class ProdukController extends Controller
 
                 $storeData = json_decode($response->getBody()->getContents(), true);
 
-                return redirect()->route('produkku.viewUpdateProduk', Crypt::encryptString($storeData['data']['_id']))->with('status_createUpdate_produk', $storeData['message']);
+                return redirect()->route('produkku.index')->with('successMessage', "Berhasil Menambahkan Produk");
             } catch (ClientException $e) {
                 $bodyError = Psr7\Message::parseMessage(Psr7\Message::toString($e->getResponse()))['body'];
 

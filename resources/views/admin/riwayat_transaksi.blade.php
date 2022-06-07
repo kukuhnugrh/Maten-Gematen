@@ -1,5 +1,5 @@
-@extends('layouts/master')
-@section('info-halaman', 'Riwayat Penjualan')
+@extends('admin/layout_admin')
+@section('info-halaman', 'Daftar Riwayat Transaksi')
 
 @section('content')
 <div id="main-content" class="d-flex flex-column">

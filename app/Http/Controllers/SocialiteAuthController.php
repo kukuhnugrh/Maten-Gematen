@@ -17,7 +17,6 @@ class SocialiteAuthController extends Controller
     public function loginWithGoogle()
     {
         try {
-
             $googleUser = Socialite::driver('google')->user();
 
             $responseData = Http::accept('application/json')->post('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/auth/login', [

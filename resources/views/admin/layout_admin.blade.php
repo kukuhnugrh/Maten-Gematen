@@ -9,9 +9,11 @@
     <title>{{ Route::currentRouteName() }}</title>
     <!-- icon -->
     <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}?v=<?php echo time(); ?>">
     @yield('content-CSS')
 
     <!-- Bootstrap CSS -->
@@ -26,6 +28,23 @@
 </head>
 
 <body>
+    @if(session()->has('message'))
+    <!-- Flexbox container for aligning the toasts -->
+    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100">
+
+        <!-- Then put toasts within -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Berhasil</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Password berhasil diubah
+            </div>
+        </div>
+    </div>
+    @endif
     <!-- SIDEBAR -->
     <aside id="sidenav" class="d-flex flex-column position-fixed top-0 start-0 bottom-0 ms-3 my-3 unpinned">
         <!-- HEADER -->
@@ -63,6 +82,12 @@
                         <span class="mx-3 fw-bold">Verifikasi Rating</span>
                     </a>
                 </li>
+                <li class="nav-item mb-3 w-100">
+                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'riwayat-transaksi') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'riwayat-transaksi' ? route('riwayat-transaksi.index') : '#' }}">
+                        <i class="mdi mdi-history"></i>
+                        <span class="mx-3 fw-bold">Riwayat Transaksi</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- FOOTER -->
@@ -79,13 +104,37 @@
     <!-- Main Content -->
     <div id="main" class="my-3 px-3">
         <section>
-            <nav id="main-navbar" class="navbar mb-3">
+            <nav id="main-navbar" class="navbar navbar navbar-expand-lg mb-3">
                 <div class="container-fluid">
                     <i class="d-flex mdi mdi-menu cursor-pointer text-white d-none"></i>
-                    <h3 class="fw-bold text-white m-0">@yield('info-halaman')</h3>
-                    <div class="d-flex flex-grow-1 justify-content-end align-items-center">
-                        <i class="mdi mdi-account text-white"></i>
-                        <span>Halo Admin</span>
+                    <h3 class="navbar-brand fw-bold text-white m-0">@yield('info-halaman')</h3>
+                    <div class="d-flex flex-grow-1 justify-content-end align-items-center px-3">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown dropstart align-items-center">
+                                <a class="nav-link dropdown-toggle m-0 p-0 text-white" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="mdi mdi-account text-white text-center"></i>
+                                    Halo Admin
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    @if(session()->get('role') == 'superadmin')
+                                    <li><a class="dropdown-item" href="{{ route('register.web') }}">Tambah Admin</a></li>
+                                    @endif
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Reset Password</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- <div class="dropstart">
+                            <a class="dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+                                <i class="mdi mdi-account text-white"></i>
+                                Halo Admin
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                @if(session()->get('role') == 'superadmin')
+                                <li><a class="dropdown-item" href="{{ route('register.web') }}">Tambah Admin</a></li>
+                                @endif
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Reset Password</a></li>
+                            </ul>
+                        </div> -->
                     </div>
                 </div>
             </nav>
@@ -93,10 +142,76 @@
         </section>
     </div>
 
+    <!-- Modal -->
+    <form action="{{route('register.post')}}" method="post" id="signup-form">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Ubah Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="oldpassword" class="form-label fw-bold fs-6">Password Lama</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control shadow-none @error('confirmpassword') is-invalid @enderror" id="oldpassword" name="oldpassword" required>
+                                <span class="input-group-text" id="showPasswordToogle" onclick="showPassword('tooggle-icon-oldpassword', 'oldpassword')"><i id="tooggle-icon-oldpassword" class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                            </div>
+                            @error('oldpassword')
+                            <div class="alert alert-danger">
+                                <div class="text-danger fs-6">{{ $message }}</div>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="newpassword" class="form-label fw-bold fs-6">Password Baru</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control shadow-none @error('confirmpassword') is-invalid @enderror" id="newpassword" name="newpassword" required>
+                                <span class="input-group-text" id="showPasswordToogle" onclick="showPassword('tooggle-icon-newpassword', 'newpassword')"><i id="tooggle-icon-newpassword" class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                            </div>
+                            @error('newpassword')
+                            <div class="alert alert-danger">
+                                <div class="text-danger fs-6">{{ $message }}</div>
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmpassword" class="form-label fw-bold fs-6">Konfirmasi Password Baru</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control shadow-none @error('confirmpassword') is-invalid @enderror" id="confirmpassword" name="confirmpassword" required>
+                                <span class="input-group-text" id="showPasswordToogle" onclick="showPassword('tooggle-icon-confirmpassword', 'confirmpassword')"><i id="tooggle-icon-confirmpassword" class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                            </div>
+                            @error('confirmpassword')
+                            <div class="alert alert-danger">
+                                <div class="text-danger fs-6">{{ $message }}</div>
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary">Ubah</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @yield('tambahanModal')
     @yield('tutorialMenambahKategoriModal')
 
     <script>
+        function showPassword(inputId, elementName) {
+            $('#' + inputId).toggleClass("fa-eye fa-eye-slash");
+            var inputType = $('[name=' + elementName + ']').attr('type');
+            if (inputType == 'password') {
+                $('[name=' + elementName + ']').attr('type', 'text');
+            } else {
+                $('[name=' + elementName + ']').attr('type', 'password');
+            }
+        }
+
         $(document).ready(function() {
             $("i.mdi-menu").click(function(e) {
                 e.preventDefault();

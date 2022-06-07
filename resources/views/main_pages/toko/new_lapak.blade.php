@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ Route::currentRouteName() }}</title>
+    <title>Pendaftaran Lapak</title>
     <!-- icon -->
     <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}?v=<?php echo time(); ?>"/>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -18,14 +18,12 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
 
-
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <!-- MDI Icons -->
-    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
 </head>
 
 <body>
@@ -54,10 +52,10 @@
         </div>
         <div class="row">
 
-            <form onsubmit="return validateForm()" action="{{route('create-lapak')}}" method="POST">
+            <form class="p-0" onsubmit="return validateForm()" action="{{route('create-lapak')}}" method="POST">
                 @csrf
                 <div class="d-flex justify-content-center">
-                    <div class="col-12">
+                    <div class="col-12 col-md-9 col-sm-9 ">
                         <div class="card mb-3">
                             <div class="card-header text-white">
                                 Informasi Toko
@@ -184,7 +182,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end mb-3">
-                            <button type="submit" class="btn btn-primary" id="btns                                                                           impan">Simpan</button>
+                            <button type="submit" class="btn btn-primary" id="btnsimpan">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -215,7 +213,7 @@
             } else if (noHandphone[0] == 0) {
                 $('#noHandphoneLapak').val(noHandphone.substr(1, noHandphone.length));
             } else {
-                let regex = /[a-zA-Z]/g;
+                let regex = /\D/g;
                 $('#noHandphoneLapak').val(noHandphone.replace(regex, ""));
             }
         }

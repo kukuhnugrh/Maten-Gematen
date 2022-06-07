@@ -73,7 +73,7 @@
             "<div class='responsive-text ellipsis' style='min-height: 100px;'>" + data.nama_produk + "</div>" +
             "</div>" +
             "<div class='info card-text'>" +
-            "<p class='d-block text-danger fw-bold'>Rp. " + data.harga_produk + "</p>" +
+            "<p class='d-block text-danger fw-bold'>Rp. " + Intl.NumberFormat('en-US').format(data.harga_produk) + "</p>" +
             "<span class='text1'>Terjual " + data.penjualan_produk + "</span>" +
             "</div>" +
             "</div>" +

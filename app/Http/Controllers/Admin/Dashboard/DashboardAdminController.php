@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class DashboardAdminController extends Controller
 {
@@ -15,7 +15,18 @@ class DashboardAdminController extends Controller
      */
     public function index()
     {
-        return view('admin/dashboard');
+        $dataLapak = Http::withToken(session('_jwtToken'))->get('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/get')->json();
+        $tmp_lapak = array();
+
+        foreach ($dataLapak['data'] as $lapak) {
+            $responseLapak = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/detail/" . $lapak['_id'] . "/get")->json();
+            $responseLapak['data']['total_produk'] = count($responseLapak['data']['produk_lapak']);
+
+
+            array_push($tmp_lapak, $responseLapak['data']);
+        }
+
+        return view('admin/dashboard_admin', ['arrLapak' => $tmp_lapak]);
     }
 
     /**

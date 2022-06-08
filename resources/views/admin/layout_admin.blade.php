@@ -7,14 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ Route::currentRouteName() }}</title>
-    <!-- icon -->
-    <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/gematen-lapak-main.css') }}?v=<?php echo time(); ?>">
-    @yield('content-CSS')
+    
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -23,8 +19,15 @@
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- icon -->
+    <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
     <!-- MDI Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+
+    @yield('content-CSS')
 </head>
 
 <body>
@@ -59,7 +62,13 @@
         <div id="sidenav-content" class="flex-grow-1 overflow-auto">
             <ul class="nav flex-column py-3">
                 <li class="nav-item mb-3 w-100">
-                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'daftar-lapak') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'kategori' ? route('daftar-lapak.index') : '#' }}">
+                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'dashboard-admin') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'dashboard-admin' ? route('dashboard-admin.index') : '#' }}">
+                        <i class="mdi mdi-desktop-mac-dashboard"></i>
+                        <span class="mx-3 fw-bold">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item mb-3 w-100">
+                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'daftar-lapak') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'daftar-lapak' ? route('daftar-lapak.index') : '#' }}">
                         <i class="mdi mdi-store-outline"></i>
                         <span class="mx-3 fw-bold">Daftar Lapak</span>
                     </a>
@@ -201,6 +210,9 @@
     @yield('tambahanModal')
     @yield('tutorialMenambahKategoriModal')
 
+    <!-- Boostrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    
     <script>
         function showPassword(inputId, elementName) {
             $('#' + inputId).toggleClass("fa-eye fa-eye-slash");
@@ -241,9 +253,8 @@
             });
         });
     </script>
+
     @yield('content-JS')
-    <!-- Boostrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
 </body>
 

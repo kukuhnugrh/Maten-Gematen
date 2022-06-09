@@ -26,11 +26,12 @@
                 <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-lapak" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th scope="col" width="30">Nama Lapak</th>
-                            <th scope="col" width="30%">Nama Umat</th>
-                            <th scope="col" width="20%">No. WA</th>
-                            <th scope="col" width="10%">Total Produk</th>
-                            <th scope="col" width="10%">Total Penjualan</th>
+                            <th scope="col" width="25">Nama Lapak</th>
+                            <th scope="col" width="25%">Nama Umat</th>
+                            <th scope="col" width="10%">No. WA</th>
+                            <th scope="col" width="15%">Tanggal Gabung</th>
+                            <th scope="col" width="15%">Total Produk</th>
+                            <th scope="col" width="10%">Total Sales</th>
                         </tr>
                     </thead>
                 </table>
@@ -43,6 +44,7 @@
 
 @section('content-JS')
 <script src="{{ asset('assets/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/datepicker/js/format-date.js') }}"></script>
 <script src="{{ asset('assets/datepicker/locales/bootstrap-datepicker.id.min.js') }}"></script>
 
 <script>
@@ -53,6 +55,7 @@
             '<td>' + lapaks["nama_lapak"] + '</td>' +
             '<td>' + lapaks["nama_user"] + '</td>' +
             '<td>' + lapaks["no_telepon_lapak"] + '</td>' +
+            '<td>' + lapaks["created_date"] + '</td>' +
             '<td>' + lapaks["total_produk"] + '</td>' +
             '<td>' + lapaks["penjualan_lapak"] + '</td>' +
             '</tr>';
@@ -60,35 +63,42 @@
     }
 
     function lapakFilterTanggal() {
-        const startDateTime = new Date($('#start-date').val());
-        const endDateTime = new Date($('#end-date').val());
-
-
         $("#list-lapak").remove();
         $("#tabel-lapak").append('<tbody id="list-lapak"></tbody>');
-        let count = 0;
-        for (let index = 0; index < lapaks.length; index++) {
-            if (lapaks[index]['created_date'] >= startDateTime.getTime() && lapaks[index]['created_date'] <= endDateTime.getTime()) {
-                count++;
+
+        if($('#start-date').val() == '' && $('#end-date').val() == ''){
+            for (let index = 0; index < lapaks.length; index++) {
                 $("#list-lapak").append(listLapak(lapaks[index]));
             }
-            
+        }else{
+            const startDateTime = new Date($('#start-date').val());
+            const endDateTime = new Date($('#end-date').val());
+
+            let count = 0;
+            for (let index = 0; index < lapaks.length; index++) {
+                if (lapaks[index]['time_created'] >= startDateTime.getTime() && lapaks[index]['time_created'] <= endDateTime.getTime()) {
+                    count++;
+                    $("#list-lapak").append(listLapak(lapaks[index]));
+                }
+                
+            }
+            if(count == 0){
+                $("#list-lapak").append(
+                    '<tr style="border-bottom: 1px solid #dcdde1;">' +
+                        '<td colspan="6" class="text-center fw-bold"> LAPAK TIDAK DITEMUKAN </td>' +
+                    '</tr>'
+                );
+            }
+            $('#total_lapak').text(count);
         }
-        if(count == 0){
-            $("#list-lapak").append(
-                '<tr style="border-bottom: 1px solid #dcdde1;">' +
-                    '<td colspan="5" class="text-center fw-bold"> LAPAK TIDAK DITEMUKAN </td>' +
-                '</tr>'
-            );
-        }
-        $('#total_lapak').text(count);
     }
 
     $(document).ready(function() {
         $('.input-daterange').datepicker({
             format: "MM dd, yyyy",
             orientation: "bottom right",
-            autoclose: true
+            autoclose: true,
+            clearBtn: true,
         });
 
         $('#total_lapak').text(lapaks.length);
@@ -97,7 +107,8 @@
         for (let index = 0; index < lapaks.length; index++) {
             const arrDate = lapaks[index]['created_date'].split("-");
             const d = new Date(arrDate[2],--arrDate[1],arrDate[0]);
-            lapaks[index]['created_date'] = d.getTime();
+            lapaks[index]['time_created'] = d.getTime();
+            lapaks[index]['created_date'] = formatTanggal(d);
             $("#list-lapak").append(listLapak(lapaks[index]));
         }
 

@@ -11,19 +11,22 @@
     <div class="d-flex align-items-center bd-highlight mb-3">
         <div class="me-auto bd-highlight fs-5 fw-bold text-uppercase">Total Lapak : <span id="total_lapak"></span></div>
         <div class="bd-highlight border">
-            <div class="input-daterange input-group" id="datepicker" >
-                <input type="text" class="form-control" placeholder="Tanggal Mulai" aria-label="start date" name="start" id="start-date" onchange="lapakFilterTanggal()">
+            <div class="input-daterange input-group" id="datepicker">
+                <input type="text" class="form-control" placeholder="Tanggal Mulai" aria-label="start date" name="start"
+                    id="start-date" onchange="lapakFilterTanggal()">
                 <span class="input-group-text">sampai</span>
-                <input type="text" class="form-control" placeholder="Tanggal Akhir" aria-label="end date" name="end" id="end-date" onchange="lapakFilterTanggal()">
+                <input type="text" class="form-control" placeholder="Tanggal Akhir" aria-label="end date" name="end"
+                    id="end-date" onchange="lapakFilterTanggal()">
             </div>
         </div>
-      </div>
+    </div>
 
     <div class="card">
         <div class="card-body">
-            
+
             <div class="table-responsive">
-                <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-lapak" cellspacing="0" width="100%">
+                <table style="border-spacing: 0 15px;" class="table table-borderless table-hover" id="tabel-lapak"
+                    cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th scope="col" width="25">Nama Lapak</th>
@@ -62,15 +65,16 @@
         return data;
     }
 
+
     function lapakFilterTanggal() {
         $("#list-lapak").remove();
         $("#tabel-lapak").append('<tbody id="list-lapak"></tbody>');
 
-        if($('#start-date').val() == '' && $('#end-date').val() == ''){
+        if ($('#start-date').val() == '' && $('#end-date').val() == '') {
             for (let index = 0; index < lapaks.length; index++) {
                 $("#list-lapak").append(listLapak(lapaks[index]));
             }
-        }else{
+        } else {
             const startDateTime = new Date($('#start-date').val());
             const endDateTime = new Date($('#end-date').val());
 
@@ -80,12 +84,12 @@
                     count++;
                     $("#list-lapak").append(listLapak(lapaks[index]));
                 }
-                
+
             }
-            if(count == 0){
+            if (count == 0) {
                 $("#list-lapak").append(
                     '<tr style="border-bottom: 1px solid #dcdde1;">' +
-                        '<td colspan="6" class="text-center fw-bold"> LAPAK TIDAK DITEMUKAN </td>' +
+                    '<td colspan="6" class="text-center fw-bold"> LAPAK TIDAK DITEMUKAN </td>' +
                     '</tr>'
                 );
             }
@@ -103,10 +107,18 @@
 
         $('#total_lapak').text(lapaks.length);
 
+        lapaks.sort((a, b) => {
+            const arrDate1 = a.created_date.split("-");
+            const arrDate2 = b.created_date.split("-");
+            let da = new Date(arrDate1[2], --arrDate1[1], arrDate1[0]);
+            let db = new Date(arrDate2[2], --arrDate2[1], arrDate2[0]);
+            return da - db;
+        });
+
         $("#tabel-lapak").append('<tbody id="list-lapak"></tbody>');
         for (let index = 0; index < lapaks.length; index++) {
             const arrDate = lapaks[index]['created_date'].split("-");
-            const d = new Date(arrDate[2],--arrDate[1],arrDate[0]);
+            const d = new Date(arrDate[2], --arrDate[1], arrDate[0]);
             lapaks[index]['time_created'] = d.getTime();
             lapaks[index]['created_date'] = formatTanggal(d);
             $("#list-lapak").append(listLapak(lapaks[index]));

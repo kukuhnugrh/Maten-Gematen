@@ -56,6 +56,7 @@
 <script src="{{ asset('assets/datepicker/locales/bootstrap-datepicker.id.min.js') }}"></script>
 
 <script>
+    let lapaks = [];
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -102,7 +103,7 @@
     }
 
 
-    function lapakFilterTanggal(lapaks) {
+    function lapakFilterTanggal() {
         $("#list-lapak").remove();
         $("#tabel-lapak").append('<tbody id="list-lapak"></tbody>');
 
@@ -110,6 +111,7 @@
             for (let index = 0; index < lapaks.length; index++) {
                 $("#list-lapak").append(listLapak(lapaks[index]));
             }
+            $('#total_lapak').text(lapaks.length);
         } else {
             const startDateTime = new Date($('#start-date').val());
             const endDateTime = new Date($('#end-date').val());
@@ -145,9 +147,8 @@
                 lapakRender.push(lapaks.data);
             });
 
-            $('#total_lapak').text(lapakRender.length);
+            $('#total_lapak').text(lapakAllDetail.length);
 
-            console.log(lapakRender);
 
             lapakRender.sort((a, b) => {
                 const arrDate1 = a.created_date.split("-");
@@ -156,6 +157,8 @@
                 let db = new Date(arrDate2[2], --arrDate2[1], arrDate2[0]);
                 return da - db;
             });
+
+            lapaks = lapakRender;
 
             $("#list-lapak").remove();
             $("#tabel-lapak").append('<tbody id="list-lapak"></tbody>');

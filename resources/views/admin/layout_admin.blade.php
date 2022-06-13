@@ -62,12 +62,6 @@
         <div id="sidenav-content" class="flex-grow-1 overflow-auto">
             <ul class="nav flex-column py-3">
                 <li class="nav-item mb-3 w-100">
-                    <a class="nav-link {{ str_contains(Request::route()->getName(), 'dashboard-admin') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'dashboard-admin' ? route('dashboard-admin.index') : '#' }}">
-                        <i class="mdi mdi-desktop-mac-dashboard"></i>
-                        <span class="mx-3 fw-bold">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item mb-3 w-100">
                     <a class="nav-link {{ str_contains(Request::route()->getName(), 'daftar-lapak') ? 'active' : 'inactive' }} d-flex align-items-center px-5" aria-current="page" href="{{ Route::currentRouteName() != 'daftar-lapak' ? route('daftar-lapak.index') : '#' }}">
                         <i class="mdi mdi-store-outline"></i>
                         <span class="mx-3 fw-bold">Daftar Lapak</span>

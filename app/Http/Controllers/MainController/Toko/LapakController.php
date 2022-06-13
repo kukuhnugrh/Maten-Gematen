@@ -36,9 +36,7 @@ class LapakController extends Controller
         $paroki = Http::withToken(session('_jwtToken'))->get("https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/paroki/get")->collect();
         if ($paroki->has("data")) {
             return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
-            return view('main_pages/toko/new_lapak', ['parokis' => $paroki['data']]);
         } else {
-            session()->flush();
             return redirect()->route('daftar-lapak.index');
         }
     }
@@ -51,7 +49,7 @@ class LapakController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validated = $request->validate([
             'nama_lapak' => 'required|max:100',
             'paroki_lapak' => 'required',
@@ -100,7 +98,7 @@ class LapakController extends Controller
      */
     public function update(Request $request)
     {
-        
+
         $validated = $request->validate([
             'nama_lapak' => 'required|max:100',
             'paroki_lapak' => 'required',
@@ -112,8 +110,6 @@ class LapakController extends Controller
         ]);
 
         //Simpan Data Lapak kedalam database
-        $kecamatan = explode("_", $request->kecamatan);
-        $kelurahan = explode("_", $request->kelurahan);
         $paroki = explode('_', $request->paroki_lapak);
 
         $updateData = Http::withToken(session('_jwtToken'))->accept('application/json')->put('https://dev-ecommerce-api.paroki-gmaklaten.web.id/api/lapak/update/' . session("_lapakId"), [
@@ -121,8 +117,8 @@ class LapakController extends Controller
             "paroki_id" => $paroki[0],
             "deskripsi_lapak" => $request->deskripsi_lapak,
             "alamat_lapak" => array(
-                "kecamatan" => $kecamatan[1],
-                "kelurahan" => $kelurahan[1],
+                "kecamatan" => $request->kecamatan,
+                "kelurahan" => $request->kelurahan,
                 "detail_alamat" => $request->detailAlamat,
                 "longitude" => $request->longitude,
                 "latitude" => $request->latitude

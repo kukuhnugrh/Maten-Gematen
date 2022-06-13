@@ -83,5 +83,9 @@ Route::middleware(['auth.login.information'])->group(function () {
         Route::group(['prefix' => 'admin/riwayatTransaksi', 'as' => 'riwayat-transaksi.'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'Admin\Transaksi\HistoriTransaksi@index']);
         });
+
+        Route::group(['prefix' => 'admin/dashboard', 'as' => 'dashboard-admin.'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'Admin\Dashboard\DashboardAdminController@index']);
+        });
     });
 });

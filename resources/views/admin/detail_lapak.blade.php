@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="row">
-                    <label for="catatanAdmin" class="col-sm-2 form-label">Catatan Admin</label>
+                <label for="catatanAdmin" class="col-sm-2 form-label">Catatan Admin</label>
                     <div class="col-sm-8">
                         <textarea class="form-control" name="catatanAdmin" id="catatanAdmin" style="height: 250px;resize: none;" maxlength="3000">{{$detailLapak['catatan_lapak']}}</textarea>
                     </div>
